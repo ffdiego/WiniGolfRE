@@ -1,0 +1,10 @@
+{
+  "physicsVersions": [
+    "modern-reference-1",
+    "surface-traversal-2"
+  ],
+  "total": 96,
+  "passed": 96,
+  "courses": 36,
+  "failures": []
+}

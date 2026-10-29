@@ -1,0 +1,344 @@
+{
+  "items": [
+    {
+      "address": "0041d1e0",
+      "bytes": "55",
+      "instruction": "PUSH EBP",
+      "comment": null
+    },
+    {
+      "address": "0041d1e1",
+      "bytes": "8bec",
+      "instruction": "MOV EBP,ESP",
+      "comment": null
+    },
+    {
+      "address": "0041d1e3",
+      "bytes": "83c4f0",
+      "instruction": "ADD ESP,-0x10",
+      "comment": null
+    },
+    {
+      "address": "0041d1e6",
+      "bytes": "33c0",
+      "instruction": "XOR EAX,EAX",
+      "comment": null
+    },
+    {
+      "address": "0041d1e8",
+      "bytes": "8945fc",
+      "instruction": "MOV dword ptr [EBP + -0x4],EAX",
+      "comment": null
+    },
+    {
+      "address": "0041d1eb",
+      "bytes": "d94514",
+      "instruction": "FLD float ptr [EBP + 0x14]",
+      "comment": null
+    },
+    {
+      "address": "0041d1ee",
+      "bytes": "d8650c",
+      "instruction": "FSUB float ptr [EBP + 0xc]",
+      "comment": null
+    },
+    {
+      "address": "0041d1f1",
+      "bytes": "d95df8",
+      "instruction": "FSTP float ptr [EBP + -0x8]",
+      "comment": null
+    },
+    {
+      "address": "0041d1f4",
+      "bytes": "d94518",
+      "instruction": "FLD float ptr [EBP + 0x18]",
+      "comment": null
+    },
+    {
+      "address": "0041d1f7",
+      "bytes": "d86510",
+      "instruction": "FSUB float ptr [EBP + 0x10]",
+      "comment": null
+    },
+    {
+      "address": "0041d1fa",
+      "bytes": "d95df4",
+      "instruction": "FSTP float ptr [EBP + -0xc]",
+      "comment": null
+    },
+    {
+      "address": "0041d1fd",
+      "bytes": "d945f8",
+      "instruction": "FLD float ptr [EBP + -0x8]",
+      "comment": null
+    },
+    {
+      "address": "0041d200",
+      "bytes": "d84df8",
+      "instruction": "FMUL float ptr [EBP + -0x8]",
+      "comment": null
+    },
+    {
+      "address": "0041d203",
+      "bytes": "d945f4",
+      "instruction": "FLD float ptr [EBP + -0xc]",
+      "comment": null
+    },
+    {
+      "address": "0041d206",
+      "bytes": "d84df4",
+      "instruction": "FMUL float ptr [EBP + -0xc]",
+      "comment": null
+    },
+    {
+      "address": "0041d209",
+      "bytes": "dec1",
+      "instruction": "FADDP",
+      "comment": null
+    },
+    {
+      "address": "0041d20b",
+      "bytes": "83c4f8",
+      "instruction": "ADD ESP,-0x8",
+      "comment": null
+    },
+    {
+      "address": "0041d20e",
+      "bytes": "dd1c24",
+      "instruction": "FSTP double ptr [ESP]",
+      "comment": null
+    },
+    {
+      "address": "0041d211",
+      "bytes": "e842980600",
+      "instruction": "CALL 0x00486a58",
+      "comment": null
+    },
+    {
+      "address": "0041d216",
+      "bytes": "83c408",
+      "instruction": "ADD ESP,0x8",
+      "comment": null
+    },
+    {
+      "address": "0041d219",
+      "bytes": "d95df0",
+      "instruction": "FSTP float ptr [EBP + -0x10]",
+      "comment": null
+    },
+    {
+      "address": "0041d21c",
+      "bytes": "d945f0",
+      "instruction": "FLD float ptr [EBP + -0x10]",
+      "comment": null
+    },
+    {
+      "address": "0041d21f",
+      "bytes": "d81d8cd24100",
+      "instruction": "FCOMP float ptr [0x0041d28c]",
+      "comment": null
+    },
+    {
+      "address": "0041d225",
+      "bytes": "dfe0",
+      "instruction": "FNSTSW AX",
+      "comment": null
+    },
+    {
+      "address": "0041d227",
+      "bytes": "9e",
+      "instruction": "SAHF",
+      "comment": null
+    },
+    {
+      "address": "0041d228",
+      "bytes": "7659",
+      "instruction": "JBE 0x0041d283",
+      "comment": null
+    },
+    {
+      "address": "0041d22a",
+      "bytes": "d945f4",
+      "instruction": "FLD float ptr [EBP + -0xc]",
+      "comment": null
+    },
+    {
+      "address": "0041d22d",
+      "bytes": "d875f0",
+      "instruction": "FDIV float ptr [EBP + -0x10]",
+      "comment": null
+    },
+    {
+      "address": "0041d230",
+      "bytes": "83c4f8",
+      "instruction": "ADD ESP,-0x8",
+      "comment": null
+    },
+    {
+      "address": "0041d233",
+      "bytes": "dd1c24",
+      "instruction": "FSTP double ptr [ESP]",
+      "comment": null
+    },
+    {
+      "address": "0041d236",
+      "bytes": "e8a9800600",
+      "instruction": "CALL 0x004852e4",
+      "comment": null
+    },
+    {
+      "address": "0041d23b",
+      "bytes": "83c408",
+      "instruction": "ADD ESP,0x8",
+      "comment": null
+    },
+    {
+      "address": "0041d23e",
+      "bytes": "d80d90d24100",
+      "instruction": "FMUL float ptr [0x0041d290]",
+      "comment": null
+    },
+    {
+      "address": "0041d244",
+      "bytes": "db2d94d24100",
+      "instruction": "FLD extended double ptr [0x0041d294]",
+      "comment": null
+    },
+    {
+      "address": "0041d24a",
+      "bytes": "dec9",
+      "instruction": "FMULP",
+      "comment": null
+    },
+    {
+      "address": "0041d24c",
+      "bytes": "d95dfc",
+      "instruction": "FSTP float ptr [EBP + -0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041d24f",
+      "bytes": "d945f8",
+      "instruction": "FLD float ptr [EBP + -0x8]",
+      "comment": null
+    },
+    {
+      "address": "0041d252",
+      "bytes": "d81d8cd24100",
+      "instruction": "FCOMP float ptr [0x0041d28c]",
+      "comment": null
+    },
+    {
+      "address": "0041d258",
+      "bytes": "dfe0",
+      "instruction": "FNSTSW AX",
+      "comment": null
+    },
+    {
+      "address": "0041d25a",
+      "bytes": "9e",
+      "instruction": "SAHF",
+      "comment": null
+    },
+    {
+      "address": "0041d25b",
+      "bytes": "730c",
+      "instruction": "JNC 0x0041d269",
+      "comment": null
+    },
+    {
+      "address": "0041d25d",
+      "bytes": "d90590d24100",
+      "instruction": "FLD float ptr [0x0041d290]",
+      "comment": null
+    },
+    {
+      "address": "0041d263",
+      "bytes": "d865fc",
+      "instruction": "FSUB float ptr [EBP + -0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041d266",
+      "bytes": "d95dfc",
+      "instruction": "FSTP float ptr [EBP + -0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041d269",
+      "bytes": "d945fc",
+      "instruction": "FLD float ptr [EBP + -0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041d26c",
+      "bytes": "d81d90d24100",
+      "instruction": "FCOMP float ptr [0x0041d290]",
+      "comment": null
+    },
+    {
+      "address": "0041d272",
+      "bytes": "dfe0",
+      "instruction": "FNSTSW AX",
+      "comment": null
+    },
+    {
+      "address": "0041d274",
+      "bytes": "9e",
+      "instruction": "SAHF",
+      "comment": null
+    },
+    {
+      "address": "0041d275",
+      "bytes": "760c",
+      "instruction": "JBE 0x0041d283",
+      "comment": null
+    },
+    {
+      "address": "0041d277",
+      "bytes": "d945fc",
+      "instruction": "FLD float ptr [EBP + -0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041d27a",
+      "bytes": "d825a0d24100",
+      "instruction": "FSUB float ptr [0x0041d2a0]",
+      "comment": null
+    },
+    {
+      "address": "0041d280",
+      "bytes": "d95dfc",
+      "instruction": "FSTP float ptr [EBP + -0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041d283",
+      "bytes": "d945fc",
+      "instruction": "FLD float ptr [EBP + -0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041d286",
+      "bytes": "8be5",
+      "instruction": "MOV ESP,EBP",
+      "comment": null
+    },
+    {
+      "address": "0041d288",
+      "bytes": "5d",
+      "instruction": "POP EBP",
+      "comment": null
+    },
+    {
+      "address": "0041d289",
+      "bytes": "c3",
+      "instruction": "RET",
+      "comment": null
+    }
+  ],
+  "offset": 0,
+  "limit": 120,
+  "total": 56,
+  "has_more": false
+}

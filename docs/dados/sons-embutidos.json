@@ -1,0 +1,126 @@
+{
+  "executableHash": "3b50e7311d733a1afbd3a33b31e14f95564226e1310a230ffc375e6727a6fb53",
+  "method": "PE resource directory; original WAV payloads copied byte-for-byte",
+  "sounds": [
+    {
+      "resourcePath": [
+        "WAVE",
+        "APPLAUSE",
+        0
+      ],
+      "rva": "0xa32b4",
+      "fileOffset": "0x9b2b4",
+      "size": 42610,
+      "sha256": "c24e15c5fa1fcd2bf597490cde06403d4b13938c4b41899dcc5708cf9eda017f",
+      "file": "simulator/assets/audio/applause.wav",
+      "format": {
+        "encoding": 1,
+        "channels": 1,
+        "sampleRate": 11025,
+        "byteRate": 11025,
+        "bitsPerSample": 8
+      },
+      "durationSeconds": 3.6663945578231294
+    },
+    {
+      "resourcePath": [
+        "WAVE",
+        "BOUNCE",
+        0
+      ],
+      "rva": "0xad928",
+      "fileOffset": "0xa5928",
+      "size": 2884,
+      "sha256": "5c7a2ea55aecb53cdcc15325e7bfd840c8718dc1d3492d9d717fae3f9001bb3f",
+      "file": "simulator/assets/audio/bounce.wav",
+      "format": {
+        "encoding": 1,
+        "channels": 1,
+        "sampleRate": 22050,
+        "byteRate": 44100,
+        "bitsPerSample": 16
+      },
+      "durationSeconds": 0.06439909297052154
+    },
+    {
+      "resourcePath": [
+        "WAVE",
+        "CLAP",
+        0
+      ],
+      "rva": "0xae46c",
+      "fileOffset": "0xa646c",
+      "size": 36110,
+      "sha256": "859c8bff35a5186087c13375ae0f0992d92b7552be275f83258b8bcea5a79a59",
+      "file": "simulator/assets/audio/clap.wav",
+      "format": {
+        "encoding": 1,
+        "channels": 1,
+        "sampleRate": 11025,
+        "byteRate": 11025,
+        "bitsPerSample": 8
+      },
+      "durationSeconds": 3.076734693877551
+    },
+    {
+      "resourcePath": [
+        "WAVE",
+        "HIT",
+        0
+      ],
+      "rva": "0xb717c",
+      "fileOffset": "0xaf17c",
+      "size": 1758,
+      "sha256": "f748469a6dc64c51ac2962e7058b54cbd90129fb4e993eb0df54047ee65d2b0f",
+      "file": "simulator/assets/audio/hit.wav",
+      "format": {
+        "encoding": 1,
+        "channels": 1,
+        "sampleRate": 11025,
+        "byteRate": 11025,
+        "bitsPerSample": 8
+      },
+      "durationSeconds": 0.15546485260770976
+    },
+    {
+      "resourcePath": [
+        "WAVE",
+        "LAUGH",
+        0
+      ],
+      "rva": "0xb785c",
+      "fileOffset": "0xaf85c",
+      "size": 17766,
+      "sha256": "eb13d2468aa44c432165755d5d64f4f22ca7c1ac336a3ff2805754368639d35f",
+      "file": "simulator/assets/audio/laugh.wav",
+      "format": {
+        "encoding": 1,
+        "channels": 1,
+        "sampleRate": 8000,
+        "byteRate": 8000,
+        "bitsPerSample": 8
+      },
+      "durationSeconds": 2.208625
+    },
+    {
+      "resourcePath": [
+        "WAVE",
+        "UH",
+        0
+      ],
+      "rva": "0xbbdc4",
+      "fileOffset": "0xb3dc4",
+      "size": 13518,
+      "sha256": "70157adfe74bf39cb4155a3919616558f8023b7b137eb88b09c8be249cb4b8da",
+      "file": "simulator/assets/audio/uh.wav",
+      "format": {
+        "encoding": 1,
+        "channels": 1,
+        "sampleRate": 11000,
+        "byteRate": 11000,
+        "bitsPerSample": 8
+      },
+      "durationSeconds": 1.2237272727272728
+    }
+  ]
+}

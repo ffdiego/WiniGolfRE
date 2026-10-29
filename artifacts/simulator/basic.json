@@ -1,0 +1,1978 @@
+{
+  "physicsVersion": "modern-reference-1",
+  "courseId": 1,
+  "courseName": "Basic",
+  "courseDataHash": "f3d6978c56f988f8f5b4995b6a70b60e55e411706cf27544beec92c66febe61f",
+  "stepSeconds": 0.02,
+  "reason": "Captured",
+  "steps": 107,
+  "strokeCount": 1,
+  "penalty": 0,
+  "finalState": {
+    "position": {
+      "x": 192.434788659962,
+      "y": 0,
+      "z": 10
+    },
+    "velocity": {
+      "x": 1.1513042268007563,
+      "y": 0,
+      "z": 0
+    },
+    "surfaceId": 2,
+    "bounceCount": 0
+  },
+  "frames": [
+    {
+      "step": 0,
+      "state": {
+        "position": {
+          "x": -250,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 10,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 1,
+      "state": {
+        "position": {
+          "x": -240,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 9.8,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 2,
+      "state": {
+        "position": {
+          "x": -230.2,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 9.604000000000001,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 3,
+      "state": {
+        "position": {
+          "x": -220.59599999999998,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 9.41192,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 4,
+      "state": {
+        "position": {
+          "x": -211.18407999999997,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 9.2236816,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 5,
+      "state": {
+        "position": {
+          "x": -201.96039839999997,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 9.039207968000001,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 6,
+      "state": {
+        "position": {
+          "x": -192.92119043199997,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 8.858423808640001,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 7,
+      "state": {
+        "position": {
+          "x": -184.06276662335998,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 8.6812553324672,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 8,
+      "state": {
+        "position": {
+          "x": -175.38151129089277,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 8.507630225817856,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 9,
+      "state": {
+        "position": {
+          "x": -166.87388106507493,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 8.337477621301499,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 10,
+      "state": {
+        "position": {
+          "x": -158.53640344377342,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 8.17072806887547,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 11,
+      "state": {
+        "position": {
+          "x": -150.36567537489796,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 8.00731350749796,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 12,
+      "state": {
+        "position": {
+          "x": -142.3583618674,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 7.847167237348001,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 13,
+      "state": {
+        "position": {
+          "x": -134.511194630052,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 7.690223892601041,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 14,
+      "state": {
+        "position": {
+          "x": -126.82097073745095,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 7.5364194147490196,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 15,
+      "state": {
+        "position": {
+          "x": -119.28455132270193,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 7.385691026454039,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 16,
+      "state": {
+        "position": {
+          "x": -111.89886029624789,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 7.237977205924959,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 17,
+      "state": {
+        "position": {
+          "x": -104.66088309032293,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 7.0932176618064595,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 18,
+      "state": {
+        "position": {
+          "x": -97.56766542851646,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 6.95135330857033,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 19,
+      "state": {
+        "position": {
+          "x": -90.61631211994613,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 6.812326242398924,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 20,
+      "state": {
+        "position": {
+          "x": -83.8039858775472,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 6.676079717550945,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 21,
+      "state": {
+        "position": {
+          "x": -77.12790615999626,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 6.542558123199926,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 22,
+      "state": {
+        "position": {
+          "x": -70.58534803679633,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 6.411706960735928,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 23,
+      "state": {
+        "position": {
+          "x": -64.1736410760604,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 6.283472821521209,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 24,
+      "state": {
+        "position": {
+          "x": -57.8901682545392,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 6.157803365090785,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 25,
+      "state": {
+        "position": {
+          "x": -51.73236488944841,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 6.034647297788969,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 26,
+      "state": {
+        "position": {
+          "x": -45.69771759165944,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 5.91395435183319,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 27,
+      "state": {
+        "position": {
+          "x": -39.78376323982625,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 5.795675264796526,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 28,
+      "state": {
+        "position": {
+          "x": -33.98808797502972,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 5.679761759500596,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 29,
+      "state": {
+        "position": {
+          "x": -28.308326215529124,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 5.566166524310584,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 30,
+      "state": {
+        "position": {
+          "x": -22.74215969121854,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 5.454843193824373,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 31,
+      "state": {
+        "position": {
+          "x": -17.287316497394166,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 5.345746329947885,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 32,
+      "state": {
+        "position": {
+          "x": -11.94157016744628,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 5.238831403348927,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 33,
+      "state": {
+        "position": {
+          "x": -6.702738764097353,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 5.134054775281948,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 34,
+      "state": {
+        "position": {
+          "x": -1.5686839888154047,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 5.0313736797763084,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 35,
+      "state": {
+        "position": {
+          "x": 3.4626896909609037,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.930746206180782,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 36,
+      "state": {
+        "position": {
+          "x": 8.393435897141686,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.8321312820571665,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 37,
+      "state": {
+        "position": {
+          "x": 13.225567179198851,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.735488656416023,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 38,
+      "state": {
+        "position": {
+          "x": 17.961055835614875,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.640778883287703,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 39,
+      "state": {
+        "position": {
+          "x": 22.601834718902577,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.547963305621948,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 40,
+      "state": {
+        "position": {
+          "x": 27.149798024524525,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.457004039509509,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 41,
+      "state": {
+        "position": {
+          "x": 31.606802064034035,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.367863958719319,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 42,
+      "state": {
+        "position": {
+          "x": 35.974666022753354,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.280506679544932,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 43,
+      "state": {
+        "position": {
+          "x": 40.25517270229829,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.194896545954034,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 44,
+      "state": {
+        "position": {
+          "x": 44.45006924825232,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.110998615034953,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 45,
+      "state": {
+        "position": {
+          "x": 48.56106786328727,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 4.028778642734254,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 46,
+      "state": {
+        "position": {
+          "x": 52.58984650602152,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.948203069879569,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 47,
+      "state": {
+        "position": {
+          "x": 56.53804957590109,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.8692390084819777,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 48,
+      "state": {
+        "position": {
+          "x": 60.40728858438307,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.791854228312338,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 49,
+      "state": {
+        "position": {
+          "x": 64.1991428126954,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.7160171437460914,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 50,
+      "state": {
+        "position": {
+          "x": 67.91515995644149,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.6416968008711694,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 51,
+      "state": {
+        "position": {
+          "x": 71.55685675731266,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.568862864853746,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 52,
+      "state": {
+        "position": {
+          "x": 75.1257196221664,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.4974856075566714,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 53,
+      "state": {
+        "position": {
+          "x": 78.62320522972307,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.427535895405538,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 54,
+      "state": {
+        "position": {
+          "x": 82.05074112512861,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.358985177497427,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 55,
+      "state": {
+        "position": {
+          "x": 85.40972630262604,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.2918054739474787,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 56,
+      "state": {
+        "position": {
+          "x": 88.70153177657352,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.225969364468529,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 57,
+      "state": {
+        "position": {
+          "x": 91.92750114104204,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.1614499771791587,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 58,
+      "state": {
+        "position": {
+          "x": 95.0889511182212,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.0982209776355756,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 59,
+      "state": {
+        "position": {
+          "x": 98.18717209585678,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 3.036256558082864,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 1,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 60,
+      "state": {
+        "position": {
+          "x": 101.22342865393965,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.975531426921207,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": [
+        {
+          "kind": "PassageSelected",
+          "surfaceId": 1,
+          "edge": 2,
+          "neighbor": 2
+        }
+      ]
+    },
+    {
+      "step": 61,
+      "state": {
+        "position": {
+          "x": 104.19896008086086,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.9160207983827826,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 62,
+      "state": {
+        "position": {
+          "x": 107.11498087924365,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.857700382415127,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 63,
+      "state": {
+        "position": {
+          "x": 109.97268126165878,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.8005463747668244,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 64,
+      "state": {
+        "position": {
+          "x": 112.7732276364256,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.744535447271488,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 65,
+      "state": {
+        "position": {
+          "x": 115.51776308369709,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.689644738326058,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 66,
+      "state": {
+        "position": {
+          "x": 118.20740782202314,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.6358518435595366,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 67,
+      "state": {
+        "position": {
+          "x": 120.84325966558268,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.5831348066883457,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 68,
+      "state": {
+        "position": {
+          "x": 123.42639447227103,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.5314721105545788,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 69,
+      "state": {
+        "position": {
+          "x": 125.9578665828256,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.480842668343487,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 70,
+      "state": {
+        "position": {
+          "x": 128.4387092511691,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.4312258149766173,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 71,
+      "state": {
+        "position": {
+          "x": 130.8699350661457,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.382601298677085,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 72,
+      "state": {
+        "position": {
+          "x": 133.2525363648228,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.3349492727035432,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 73,
+      "state": {
+        "position": {
+          "x": 135.58748563752633,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.2882502872494723,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 74,
+      "state": {
+        "position": {
+          "x": 137.8757359247758,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.2424852815044827,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 75,
+      "state": {
+        "position": {
+          "x": 140.11822120628028,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.197635575874393,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 76,
+      "state": {
+        "position": {
+          "x": 142.31585678215467,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.153682864356905,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 77,
+      "state": {
+        "position": {
+          "x": 144.46953964651158,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.110609207069767,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 78,
+      "state": {
+        "position": {
+          "x": 146.58014885358133,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.0683970229283717,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 79,
+      "state": {
+        "position": {
+          "x": 148.6485458765097,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 2.027029082469804,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 80,
+      "state": {
+        "position": {
+          "x": 150.6755749589795,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.9864885008204078,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 81,
+      "state": {
+        "position": {
+          "x": 152.6620634597999,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.9467587308039997,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 82,
+      "state": {
+        "position": {
+          "x": 154.6088221906039,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.9078235561879198,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 83,
+      "state": {
+        "position": {
+          "x": 156.5166457467918,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.8696670850641612,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 84,
+      "state": {
+        "position": {
+          "x": 158.38631283185595,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.832273743362878,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 85,
+      "state": {
+        "position": {
+          "x": 160.21858657521884,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.7956282684956204,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 86,
+      "state": {
+        "position": {
+          "x": 162.01421484371446,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.759715703125708,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 87,
+      "state": {
+        "position": {
+          "x": 163.77393054684018,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.7245213890631939,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 88,
+      "state": {
+        "position": {
+          "x": 165.49845193590338,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.69003096128193,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 89,
+      "state": {
+        "position": {
+          "x": 167.1884828971853,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.6562303420562914,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 90,
+      "state": {
+        "position": {
+          "x": 168.8447132392416,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.6231057352151654,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 91,
+      "state": {
+        "position": {
+          "x": 170.46781897445678,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.590643620510862,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 92,
+      "state": {
+        "position": {
+          "x": 172.05846259496764,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.5588307481006447,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 93,
+      "state": {
+        "position": {
+          "x": 173.61729334306827,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.5276541331386317,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 94,
+      "state": {
+        "position": {
+          "x": 175.1449474762069,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.497101050475859,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 95,
+      "state": {
+        "position": {
+          "x": 176.64204852668277,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.467159029466342,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 96,
+      "state": {
+        "position": {
+          "x": 178.1092075561491,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.437815848877015,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 97,
+      "state": {
+        "position": {
+          "x": 179.54702340502612,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.4090595318994747,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 98,
+      "state": {
+        "position": {
+          "x": 180.9560829369256,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.3808783412614851,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 99,
+      "state": {
+        "position": {
+          "x": 182.3369612781871,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.3532607744362555,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 100,
+      "state": {
+        "position": {
+          "x": 183.69022205262334,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.3261955589475303,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 101,
+      "state": {
+        "position": {
+          "x": 185.01641761157086,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.2996716477685797,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 102,
+      "state": {
+        "position": {
+          "x": 186.31608925933944,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.273678214813208,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 103,
+      "state": {
+        "position": {
+          "x": 187.58976747415264,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.2482046505169437,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 104,
+      "state": {
+        "position": {
+          "x": 188.8379721246696,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.2232405575066048,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 105,
+      "state": {
+        "position": {
+          "x": 190.0612126821762,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.1987757463564725,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 106,
+      "state": {
+        "position": {
+          "x": 191.25998842853267,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.174800231429343,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    },
+    {
+      "step": 107,
+      "state": {
+        "position": {
+          "x": 192.434788659962,
+          "y": 0,
+          "z": 10
+        },
+        "velocity": {
+          "x": 1.1513042268007563,
+          "y": 0,
+          "z": 0
+        },
+        "surfaceId": 2,
+        "bounceCount": 0
+      },
+      "events": []
+    }
+  ]
+}

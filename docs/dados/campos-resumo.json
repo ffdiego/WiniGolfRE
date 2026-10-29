@@ -1,0 +1,412 @@
+{
+  "sourceSha256": "3b50e7311d733a1afbd3a33b31e14f95564226e1310a230ffc375e6727a6fb53",
+  "instructionCount": 19051,
+  "method": "Static subset evaluation; string helper calls modeled, volatile registers invalidated; all instruction bytes checked against PE. No execution.",
+  "fields": [
+    {
+      "field": 1,
+      "name": "Basic",
+      "vertices": 10,
+      "surfaces": 2,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 2,
+      "name": "Dogleg",
+      "vertices": 14,
+      "surfaces": 4,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 3,
+      "name": "Dip",
+      "vertices": 16,
+      "surfaces": 5,
+      "par": 2,
+      "heightRange": [
+        10,
+        90
+      ]
+    },
+    {
+      "field": 4,
+      "name": "Horseshoe",
+      "vertices": 18,
+      "surfaces": 6,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 5,
+      "name": "Plateau",
+      "vertices": 21,
+      "surfaces": 5,
+      "par": 2,
+      "heightRange": [
+        50,
+        100
+      ]
+    },
+    {
+      "field": 6,
+      "name": "Cactus",
+      "vertices": 20,
+      "surfaces": 9,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 7,
+      "name": "Double-bump",
+      "vertices": 20,
+      "surfaces": 7,
+      "par": 2,
+      "heightRange": [
+        10,
+        60
+      ]
+    },
+    {
+      "field": 8,
+      "name": "Octagon",
+      "vertices": 18,
+      "surfaces": 8,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 9,
+      "name": "No",
+      "vertices": 18,
+      "surfaces": 6,
+      "par": 3,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 10,
+      "name": "Mega",
+      "vertices": 10,
+      "surfaces": 2,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 11,
+      "name": "Hammer",
+      "vertices": 16,
+      "surfaces": 7,
+      "par": 3,
+      "heightRange": [
+        10,
+        50
+      ]
+    },
+    {
+      "field": 12,
+      "name": "Bump",
+      "vertices": 14,
+      "surfaces": 4,
+      "par": 2,
+      "heightRange": [
+        10,
+        90
+      ]
+    },
+    {
+      "field": 13,
+      "name": "Pyramid",
+      "vertices": 12,
+      "surfaces": 9,
+      "par": 4,
+      "heightRange": [
+        10,
+        60
+      ]
+    },
+    {
+      "field": 14,
+      "name": "Branches",
+      "vertices": 28,
+      "surfaces": 11,
+      "par": 3,
+      "heightRange": [
+        10,
+        60
+      ]
+    },
+    {
+      "field": 15,
+      "name": "Cross",
+      "vertices": 24,
+      "surfaces": 9,
+      "par": 3,
+      "heightRange": [
+        10,
+        60
+      ]
+    },
+    {
+      "field": 16,
+      "name": "Stadium",
+      "vertices": 19,
+      "surfaces": 6,
+      "par": 2,
+      "heightRange": [
+        10,
+        50
+      ]
+    },
+    {
+      "field": 17,
+      "name": "Long",
+      "vertices": 10,
+      "surfaces": 2,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 18,
+      "name": "Bump-up",
+      "vertices": 30,
+      "surfaces": 11,
+      "par": 3,
+      "heightRange": [
+        10,
+        90
+      ]
+    },
+    {
+      "field": 19,
+      "name": "Shortcut",
+      "vertices": 24,
+      "surfaces": 10,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 20,
+      "name": "Hills",
+      "vertices": 20,
+      "surfaces": 7,
+      "par": 2,
+      "heightRange": [
+        10,
+        160
+      ]
+    },
+    {
+      "field": 21,
+      "name": "Pipes",
+      "vertices": 32,
+      "surfaces": 11,
+      "par": 3,
+      "heightRange": [
+        10,
+        70
+      ]
+    },
+    {
+      "field": 22,
+      "name": "Spring",
+      "vertices": 20,
+      "surfaces": 6,
+      "par": 3,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 23,
+      "name": "Snake",
+      "vertices": 32,
+      "surfaces": 11,
+      "par": 3,
+      "heightRange": [
+        10,
+        40
+      ]
+    },
+    {
+      "field": 24,
+      "name": "Double-dip",
+      "vertices": 22,
+      "surfaces": 8,
+      "par": 2,
+      "heightRange": [
+        10,
+        60
+      ]
+    },
+    {
+      "field": 25,
+      "name": "Splitt",
+      "vertices": 19,
+      "surfaces": 7,
+      "par": 3,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 26,
+      "name": "Green",
+      "vertices": 8,
+      "surfaces": 1,
+      "par": 1,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 27,
+      "name": "Turn",
+      "vertices": 21,
+      "surfaces": 7,
+      "par": 3,
+      "heightRange": [
+        10,
+        90
+      ]
+    },
+    {
+      "field": 28,
+      "name": "Side",
+      "vertices": 20,
+      "surfaces": 8,
+      "par": 2,
+      "heightRange": [
+        10,
+        60
+      ]
+    },
+    {
+      "field": 29,
+      "name": "Roundtrip",
+      "vertices": 30,
+      "surfaces": 10,
+      "par": 3,
+      "heightRange": [
+        10,
+        110
+      ]
+    },
+    {
+      "field": 30,
+      "name": "Down",
+      "vertices": 22,
+      "surfaces": 7,
+      "par": 2,
+      "heightRange": [
+        10,
+        90
+      ]
+    },
+    {
+      "field": 31,
+      "name": "Goldfish",
+      "vertices": 11,
+      "surfaces": 3,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 32,
+      "name": "Totem",
+      "vertices": 32,
+      "surfaces": 15,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 33,
+      "name": "Why",
+      "vertices": 12,
+      "surfaces": 5,
+      "par": 2,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 34,
+      "name": "Walls",
+      "vertices": 28,
+      "surfaces": 12,
+      "par": 3,
+      "heightRange": [
+        10,
+        60
+      ]
+    },
+    {
+      "field": 35,
+      "name": "Zigzag",
+      "vertices": 22,
+      "surfaces": 8,
+      "par": 3,
+      "heightRange": [
+        10,
+        10
+      ]
+    },
+    {
+      "field": 36,
+      "name": "Maze",
+      "vertices": 25,
+      "surfaces": 16,
+      "par": 4,
+      "heightRange": [
+        10,
+        10
+      ]
+    }
+  ],
+  "issues": [
+    {
+      "field": 25,
+      "name": "Splitt",
+      "type": "unassigned-coordinate",
+      "vertex": 7,
+      "referencedBySurfaces": []
+    }
+  ]
+}

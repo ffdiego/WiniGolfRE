@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Iced" Version="1.21.0" />
+    <ProjectReference Include="../../src/Winigolf.Physics/Winigolf.Physics.csproj" />
+  </ItemGroup>
+</Project>

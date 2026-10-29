@@ -1,0 +1,20 @@
+# Saídas locais do .NET
+**/bin/
+**/obj/
+**/.cache/
+.vs/
+*.user
+*.suo
+
+# Arquivos originais do jogo e projeto local do Ghidra
+/WiniGolf/
+/WiniGolf.exe
+/Winigolf.hlp
+/winigolf.mid
+/WiniGolf.zip
+/winigolf_ghidra/
+
+# Arquivos de editor e sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini

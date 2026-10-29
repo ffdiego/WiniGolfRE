@@ -1,0 +1,446 @@
+{
+  "items": [
+    {
+      "address": "0041d9dc",
+      "bytes": "53",
+      "instruction": "PUSH EBX",
+      "comment": null
+    },
+    {
+      "address": "0041d9dd",
+      "bytes": "8bd8",
+      "instruction": "MOV EBX,EAX",
+      "comment": null
+    },
+    {
+      "address": "0041d9df",
+      "bytes": "83c4f8",
+      "instruction": "ADD ESP,-0x8",
+      "comment": null
+    },
+    {
+      "address": "0041d9e2",
+      "bytes": "d98358820c00",
+      "instruction": "FLD float ptr [EBX + 0xc8258]",
+      "comment": null
+    },
+    {
+      "address": "0041d9e8",
+      "bytes": "dc0df8da4100",
+      "instruction": "FMUL double ptr [0x0041daf8]",
+      "comment": null
+    },
+    {
+      "address": "0041d9ee",
+      "bytes": "db2d00db4100",
+      "instruction": "FLD extended double ptr [0x0041db00]",
+      "comment": null
+    },
+    {
+      "address": "0041d9f4",
+      "bytes": "dec9",
+      "instruction": "FMULP",
+      "comment": null
+    },
+    {
+      "address": "0041d9f6",
+      "bytes": "83c4f8",
+      "instruction": "ADD ESP,-0x8",
+      "comment": null
+    },
+    {
+      "address": "0041d9f9",
+      "bytes": "dd1c24",
+      "instruction": "FSTP double ptr [ESP]",
+      "comment": null
+    },
+    {
+      "address": "0041d9fc",
+      "bytes": "e893900600",
+      "instruction": "CALL 0x00486a94",
+      "comment": null
+    },
+    {
+      "address": "0041da01",
+      "bytes": "83c408",
+      "instruction": "ADD ESP,0x8",
+      "comment": null
+    },
+    {
+      "address": "0041da04",
+      "bytes": "d91c24",
+      "instruction": "FSTP float ptr [ESP]",
+      "comment": null
+    },
+    {
+      "address": "0041da07",
+      "bytes": "d9835c820c00",
+      "instruction": "FLD float ptr [EBX + 0xc825c]",
+      "comment": null
+    },
+    {
+      "address": "0041da0d",
+      "bytes": "dc0df8da4100",
+      "instruction": "FMUL double ptr [0x0041daf8]",
+      "comment": null
+    },
+    {
+      "address": "0041da13",
+      "bytes": "db2d00db4100",
+      "instruction": "FLD extended double ptr [0x0041db00]",
+      "comment": null
+    },
+    {
+      "address": "0041da19",
+      "bytes": "dec9",
+      "instruction": "FMULP",
+      "comment": null
+    },
+    {
+      "address": "0041da1b",
+      "bytes": "83c4f8",
+      "instruction": "ADD ESP,-0x8",
+      "comment": null
+    },
+    {
+      "address": "0041da1e",
+      "bytes": "dd1c24",
+      "instruction": "FSTP double ptr [ESP]",
+      "comment": null
+    },
+    {
+      "address": "0041da21",
+      "bytes": "e86e900600",
+      "instruction": "CALL 0x00486a94",
+      "comment": null
+    },
+    {
+      "address": "0041da26",
+      "bytes": "83c408",
+      "instruction": "ADD ESP,0x8",
+      "comment": null
+    },
+    {
+      "address": "0041da29",
+      "bytes": "d95c2404",
+      "instruction": "FSTP float ptr [ESP + 0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041da2d",
+      "bytes": "d90424",
+      "instruction": "FLD float ptr [ESP]",
+      "comment": null
+    },
+    {
+      "address": "0041da30",
+      "bytes": "d80c24",
+      "instruction": "FMUL float ptr [ESP]",
+      "comment": null
+    },
+    {
+      "address": "0041da33",
+      "bytes": "d8050cdb4100",
+      "instruction": "FADD float ptr [0x0041db0c]",
+      "comment": null
+    },
+    {
+      "address": "0041da39",
+      "bytes": "d9442404",
+      "instruction": "FLD float ptr [ESP + 0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041da3d",
+      "bytes": "d84c2404",
+      "instruction": "FMUL float ptr [ESP + 0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041da41",
+      "bytes": "83c4f8",
+      "instruction": "ADD ESP,-0x8",
+      "comment": null
+    },
+    {
+      "address": "0041da44",
+      "bytes": "dec1",
+      "instruction": "FADDP",
+      "comment": null
+    },
+    {
+      "address": "0041da46",
+      "bytes": "d98364820c00",
+      "instruction": "FLD float ptr [EBX + 0xc8264]",
+      "comment": null
+    },
+    {
+      "address": "0041da4c",
+      "bytes": "d88b64820c00",
+      "instruction": "FMUL float ptr [EBX + 0xc8264]",
+      "comment": null
+    },
+    {
+      "address": "0041da52",
+      "bytes": "def1",
+      "instruction": "FDIVRP",
+      "comment": null
+    },
+    {
+      "address": "0041da54",
+      "bytes": "dd1c24",
+      "instruction": "FSTP double ptr [ESP]",
+      "comment": null
+    },
+    {
+      "address": "0041da57",
+      "bytes": "e8fc8f0600",
+      "instruction": "CALL 0x00486a58",
+      "comment": null
+    },
+    {
+      "address": "0041da5c",
+      "bytes": "83c408",
+      "instruction": "ADD ESP,0x8",
+      "comment": null
+    },
+    {
+      "address": "0041da5f",
+      "bytes": "d99b34820c00",
+      "instruction": "FSTP float ptr [EBX + 0xc8234]",
+      "comment": null
+    },
+    {
+      "address": "0041da65",
+      "bytes": "d98358820c00",
+      "instruction": "FLD float ptr [EBX + 0xc8258]",
+      "comment": null
+    },
+    {
+      "address": "0041da6b",
+      "bytes": "d81d10db4100",
+      "instruction": "FCOMP float ptr [0x0041db10]",
+      "comment": null
+    },
+    {
+      "address": "0041da71",
+      "bytes": "dfe0",
+      "instruction": "FNSTSW AX",
+      "comment": null
+    },
+    {
+      "address": "0041da73",
+      "bytes": "9e",
+      "instruction": "SAHF",
+      "comment": null
+    },
+    {
+      "address": "0041da74",
+      "bytes": "7612",
+      "instruction": "JBE 0x0041da88",
+      "comment": null
+    },
+    {
+      "address": "0041da76",
+      "bytes": "d90514db4100",
+      "instruction": "FLD float ptr [0x0041db14]",
+      "comment": null
+    },
+    {
+      "address": "0041da7c",
+      "bytes": "d88b34820c00",
+      "instruction": "FMUL float ptr [EBX + 0xc8234]",
+      "comment": null
+    },
+    {
+      "address": "0041da82",
+      "bytes": "d99b34820c00",
+      "instruction": "FSTP float ptr [EBX + 0xc8234]",
+      "comment": null
+    },
+    {
+      "address": "0041da88",
+      "bytes": "d98358820c00",
+      "instruction": "FLD float ptr [EBX + 0xc8258]",
+      "comment": null
+    },
+    {
+      "address": "0041da8e",
+      "bytes": "d81d18db4100",
+      "instruction": "FCOMP float ptr [0x0041db18]",
+      "comment": null
+    },
+    {
+      "address": "0041da94",
+      "bytes": "dfe0",
+      "instruction": "FNSTSW AX",
+      "comment": null
+    },
+    {
+      "address": "0041da96",
+      "bytes": "9e",
+      "instruction": "SAHF",
+      "comment": null
+    },
+    {
+      "address": "0041da97",
+      "bytes": "7312",
+      "instruction": "JNC 0x0041daab",
+      "comment": null
+    },
+    {
+      "address": "0041da99",
+      "bytes": "d90514db4100",
+      "instruction": "FLD float ptr [0x0041db14]",
+      "comment": null
+    },
+    {
+      "address": "0041da9f",
+      "bytes": "d88b34820c00",
+      "instruction": "FMUL float ptr [EBX + 0xc8234]",
+      "comment": null
+    },
+    {
+      "address": "0041daa5",
+      "bytes": "d99b34820c00",
+      "instruction": "FSTP float ptr [EBX + 0xc8234]",
+      "comment": null
+    },
+    {
+      "address": "0041daab",
+      "bytes": "d90424",
+      "instruction": "FLD float ptr [ESP]",
+      "comment": null
+    },
+    {
+      "address": "0041daae",
+      "bytes": "d88b34820c00",
+      "instruction": "FMUL float ptr [EBX + 0xc8234]",
+      "comment": null
+    },
+    {
+      "address": "0041dab4",
+      "bytes": "d99b38820c00",
+      "instruction": "FSTP float ptr [EBX + 0xc8238]",
+      "comment": null
+    },
+    {
+      "address": "0041daba",
+      "bytes": "d9442404",
+      "instruction": "FLD float ptr [ESP + 0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041dabe",
+      "bytes": "d88b34820c00",
+      "instruction": "FMUL float ptr [EBX + 0xc8234]",
+      "comment": null
+    },
+    {
+      "address": "0041dac4",
+      "bytes": "d99b3c820c00",
+      "instruction": "FSTP float ptr [EBX + 0xc823c]",
+      "comment": null
+    },
+    {
+      "address": "0041daca",
+      "bytes": "d90424",
+      "instruction": "FLD float ptr [ESP]",
+      "comment": null
+    },
+    {
+      "address": "0041dacd",
+      "bytes": "d81d1cdb4100",
+      "instruction": "FCOMP float ptr [0x0041db1c]",
+      "comment": null
+    },
+    {
+      "address": "0041dad3",
+      "bytes": "dfe0",
+      "instruction": "FNSTSW AX",
+      "comment": null
+    },
+    {
+      "address": "0041dad5",
+      "bytes": "9e",
+      "instruction": "SAHF",
+      "comment": null
+    },
+    {
+      "address": "0041dad6",
+      "bytes": "751b",
+      "instruction": "JNZ 0x0041daf3",
+      "comment": null
+    },
+    {
+      "address": "0041dad8",
+      "bytes": "d9442404",
+      "instruction": "FLD float ptr [ESP + 0x4]",
+      "comment": null
+    },
+    {
+      "address": "0041dadc",
+      "bytes": "d81d1cdb4100",
+      "instruction": "FCOMP float ptr [0x0041db1c]",
+      "comment": null
+    },
+    {
+      "address": "0041dae2",
+      "bytes": "dfe0",
+      "instruction": "FNSTSW AX",
+      "comment": null
+    },
+    {
+      "address": "0041dae4",
+      "bytes": "9e",
+      "instruction": "SAHF",
+      "comment": null
+    },
+    {
+      "address": "0041dae5",
+      "bytes": "750c",
+      "instruction": "JNZ 0x0041daf3",
+      "comment": null
+    },
+    {
+      "address": "0041dae7",
+      "bytes": "8b9364820c00",
+      "instruction": "MOV EDX,dword ptr [EBX + 0xc8264]",
+      "comment": null
+    },
+    {
+      "address": "0041daed",
+      "bytes": "89933c820c00",
+      "instruction": "MOV dword ptr [EBX + 0xc823c],EDX",
+      "comment": null
+    },
+    {
+      "address": "0041daf3",
+      "bytes": "59",
+      "instruction": "POP ECX",
+      "comment": null
+    },
+    {
+      "address": "0041daf4",
+      "bytes": "5a",
+      "instruction": "POP EDX",
+      "comment": null
+    },
+    {
+      "address": "0041daf5",
+      "bytes": "5b",
+      "instruction": "POP EBX",
+      "comment": null
+    },
+    {
+      "address": "0041daf6",
+      "bytes": "c3",
+      "instruction": "RET",
+      "comment": null
+    }
+  ],
+  "offset": 0,
+  "limit": 180,
+  "total": 73,
+  "has_more": false
+}

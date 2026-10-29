@@ -1,0 +1,1256 @@
+{
+  "field": 34,
+  "name": "Walls",
+  "nameEvidence": {
+    "value": "Walls",
+    "instruction": "0041948a",
+    "objectOffset": "0xc8078",
+    "stringAddress": "0x48e6cf",
+    "construction": "00419472"
+  },
+  "vertexCount": {
+    "value": 28,
+    "instruction": "00418a4d",
+    "objectOffset": "0x9cddc"
+  },
+  "surfaceCount": {
+    "value": 12,
+    "instruction": "00418faf",
+    "objectOffset": "0x9ce70"
+  },
+  "vertices": [
+    {
+      "id": 1,
+      "x": {
+        "value": -150,
+        "instruction": "00418375",
+        "objectOffset": "0x850e0"
+      },
+      "y": {
+        "value": -150,
+        "instruction": "0041838a",
+        "objectOffset": "0x88ab0"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "0041839c",
+        "objectOffset": "0x8c480"
+      }
+    },
+    {
+      "id": 2,
+      "x": {
+        "value": -50,
+        "instruction": "004183af",
+        "objectOffset": "0x850e4"
+      },
+      "y": {
+        "value": -150,
+        "instruction": "004183c1",
+        "objectOffset": "0x88ab4"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "004183e1",
+        "objectOffset": "0x8c484"
+      }
+    },
+    {
+      "id": 3,
+      "x": {
+        "value": -50,
+        "instruction": "004183ec",
+        "objectOffset": "0x850e8"
+      },
+      "y": {
+        "value": -300,
+        "instruction": "00418400",
+        "objectOffset": "0x88ab8"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "00418420",
+        "objectOffset": "0x8c488"
+      }
+    },
+    {
+      "id": 4,
+      "x": {
+        "value": -150,
+        "instruction": "0041842b",
+        "objectOffset": "0x850ec"
+      },
+      "y": {
+        "value": -300,
+        "instruction": "0041843f",
+        "objectOffset": "0x88abc"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "0041845f",
+        "objectOffset": "0x8c48c"
+      }
+    },
+    {
+      "id": 5,
+      "x": {
+        "value": -250,
+        "instruction": "0041846a",
+        "objectOffset": "0x850f0"
+      },
+      "y": {
+        "value": -150,
+        "instruction": "0041847e",
+        "objectOffset": "0x88ac0"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "0041849e",
+        "objectOffset": "0x8c490"
+      }
+    },
+    {
+      "id": 6,
+      "x": {
+        "value": -250,
+        "instruction": "004184a9",
+        "objectOffset": "0x850f4"
+      },
+      "y": {
+        "value": -300,
+        "instruction": "004184bd",
+        "objectOffset": "0x88ac4"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "004184dd",
+        "objectOffset": "0x8c494"
+      }
+    },
+    {
+      "id": 7,
+      "x": {
+        "value": -250,
+        "instruction": "004184e8",
+        "objectOffset": "0x850f8"
+      },
+      "y": {
+        "value": 0,
+        "instruction": "004184fc",
+        "objectOffset": "0x88ac8"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "0041851a",
+        "objectOffset": "0x8c498"
+      }
+    },
+    {
+      "id": 8,
+      "x": {
+        "value": -150,
+        "instruction": "00418525",
+        "objectOffset": "0x850fc"
+      },
+      "y": {
+        "value": 0,
+        "instruction": "00418539",
+        "objectOffset": "0x88acc"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "00418557",
+        "objectOffset": "0x8c49c"
+      }
+    },
+    {
+      "id": 9,
+      "x": {
+        "value": -50,
+        "instruction": "00418562",
+        "objectOffset": "0x85100"
+      },
+      "y": {
+        "value": 0,
+        "instruction": "00418576",
+        "objectOffset": "0x88ad0"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "00418591",
+        "objectOffset": "0x8c4a0"
+      }
+    },
+    {
+      "id": 10,
+      "x": {
+        "value": -150,
+        "instruction": "004185a4",
+        "objectOffset": "0x85104"
+      },
+      "y": {
+        "value": 150,
+        "instruction": "004185b3",
+        "objectOffset": "0x88ad4"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "004185d0",
+        "objectOffset": "0x8c4a4"
+      }
+    },
+    {
+      "id": 11,
+      "x": {
+        "value": -50,
+        "instruction": "004185e3",
+        "objectOffset": "0x85108"
+      },
+      "y": {
+        "value": 150,
+        "instruction": "004185f2",
+        "objectOffset": "0x88ad8"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "0041860f",
+        "objectOffset": "0x8c4a8"
+      }
+    },
+    {
+      "id": 12,
+      "x": {
+        "value": -250,
+        "instruction": "00418622",
+        "objectOffset": "0x8510c"
+      },
+      "y": {
+        "value": 150,
+        "instruction": "00418631",
+        "objectOffset": "0x88adc"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "0041864e",
+        "objectOffset": "0x8c4ac"
+      }
+    },
+    {
+      "id": 13,
+      "x": {
+        "value": -250,
+        "instruction": "00418661",
+        "objectOffset": "0x85110"
+      },
+      "y": {
+        "value": 300,
+        "instruction": "00418670",
+        "objectOffset": "0x88ae0"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "0041868d",
+        "objectOffset": "0x8c4b0"
+      }
+    },
+    {
+      "id": 14,
+      "x": {
+        "value": -150,
+        "instruction": "004186a0",
+        "objectOffset": "0x85114"
+      },
+      "y": {
+        "value": 300,
+        "instruction": "004186af",
+        "objectOffset": "0x88ae4"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "004186cc",
+        "objectOffset": "0x8c4b4"
+      }
+    },
+    {
+      "id": 15,
+      "x": {
+        "value": -50,
+        "instruction": "004186df",
+        "objectOffset": "0x85118"
+      },
+      "y": {
+        "value": 300,
+        "instruction": "004186ee",
+        "objectOffset": "0x88ae8"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "0041870b",
+        "objectOffset": "0x8c4b8"
+      }
+    },
+    {
+      "id": 16,
+      "x": {
+        "value": 100,
+        "instruction": "0041871e",
+        "objectOffset": "0x8511c"
+      },
+      "y": {
+        "value": 300,
+        "instruction": "0041872d",
+        "objectOffset": "0x88aec"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "0041874a",
+        "objectOffset": "0x8c4bc"
+      }
+    },
+    {
+      "id": 17,
+      "x": {
+        "value": 100,
+        "instruction": "0041875d",
+        "objectOffset": "0x85120"
+      },
+      "y": {
+        "value": 150,
+        "instruction": "00418768",
+        "objectOffset": "0x88af0"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "00418789",
+        "objectOffset": "0x8c4c0"
+      }
+    },
+    {
+      "id": 18,
+      "x": {
+        "value": 150,
+        "instruction": "0041879e",
+        "objectOffset": "0x85124"
+      },
+      "y": {
+        "value": 300,
+        "instruction": "004187b0",
+        "objectOffset": "0x88af4"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "004187c3",
+        "objectOffset": "0x8c4c4"
+      }
+    },
+    {
+      "id": 19,
+      "x": {
+        "value": 200,
+        "instruction": "004187d5",
+        "objectOffset": "0x85128"
+      },
+      "y": {
+        "value": 250,
+        "instruction": "004187f5",
+        "objectOffset": "0x88af8"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "00418800",
+        "objectOffset": "0x8c4c8"
+      }
+    },
+    {
+      "id": 20,
+      "x": {
+        "value": 200,
+        "instruction": "00418814",
+        "objectOffset": "0x8512c"
+      },
+      "y": {
+        "value": 150,
+        "instruction": "00418834",
+        "objectOffset": "0x88afc"
+      },
+      "z": {
+        "value": 60,
+        "instruction": "0041883f",
+        "objectOffset": "0x8c4cc"
+      }
+    },
+    {
+      "id": 21,
+      "x": {
+        "value": 200,
+        "instruction": "00418853",
+        "objectOffset": "0x85130"
+      },
+      "y": {
+        "value": -100,
+        "instruction": "00418873",
+        "objectOffset": "0x88b00"
+      },
+      "z": {
+        "value": 10,
+        "instruction": "0041887e",
+        "objectOffset": "0x8c4d0"
+      }
+    },
+    {
+      "id": 22,
+      "x": {
+        "value": 100,
+        "instruction": "00418892",
+        "objectOffset": "0x85134"
+      },
+      "y": {
+        "value": -100,
+        "instruction": "004188b2",
+        "objectOffset": "0x88b04"
+      },
+      "z": {
+        "value": 10,
+        "instruction": "004188bd",
+        "objectOffset": "0x8c4d4"
+      }
+    },
+    {
+      "id": 23,
+      "x": {
+        "value": 250,
+        "instruction": "004188d1",
+        "objectOffset": "0x85138"
+      },
+      "y": {
+        "value": -150,
+        "instruction": "004188f1",
+        "objectOffset": "0x88b08"
+      },
+      "z": {
+        "value": 10,
+        "instruction": "004188fc",
+        "objectOffset": "0x8c4d8"
+      }
+    },
+    {
+      "id": 24,
+      "x": {
+        "value": 250,
+        "instruction": "00418910",
+        "objectOffset": "0x8513c"
+      },
+      "y": {
+        "value": -250,
+        "instruction": "00418930",
+        "objectOffset": "0x88b0c"
+      },
+      "z": {
+        "value": 10,
+        "instruction": "0041893b",
+        "objectOffset": "0x8c4dc"
+      }
+    },
+    {
+      "id": 25,
+      "x": {
+        "value": 200,
+        "instruction": "0041894f",
+        "objectOffset": "0x85140"
+      },
+      "y": {
+        "value": -300,
+        "instruction": "0041896f",
+        "objectOffset": "0x88b10"
+      },
+      "z": {
+        "value": 10,
+        "instruction": "0041897a",
+        "objectOffset": "0x8c4e0"
+      }
+    },
+    {
+      "id": 26,
+      "x": {
+        "value": 100,
+        "instruction": "0041898e",
+        "objectOffset": "0x85144"
+      },
+      "y": {
+        "value": -300,
+        "instruction": "004189ae",
+        "objectOffset": "0x88b14"
+      },
+      "z": {
+        "value": 10,
+        "instruction": "004189b9",
+        "objectOffset": "0x8c4e4"
+      }
+    },
+    {
+      "id": 27,
+      "x": {
+        "value": 50,
+        "instruction": "004189cd",
+        "objectOffset": "0x85148"
+      },
+      "y": {
+        "value": -250,
+        "instruction": "004189ed",
+        "objectOffset": "0x88b18"
+      },
+      "z": {
+        "value": 10,
+        "instruction": "004189f8",
+        "objectOffset": "0x8c4e8"
+      }
+    },
+    {
+      "id": 28,
+      "x": {
+        "value": 50,
+        "instruction": "00418a0c",
+        "objectOffset": "0x8514c"
+      },
+      "y": {
+        "value": -150,
+        "instruction": "00418a2d",
+        "objectOffset": "0x88b1c"
+      },
+      "z": {
+        "value": 10,
+        "instruction": "00418a38",
+        "objectOffset": "0x8c4ec"
+      }
+    }
+  ],
+  "surfaces": [
+    {
+      "id": 1,
+      "vertexCount": {
+        "value": 4,
+        "instruction": "00418aa9",
+        "objectOffset": "0x9cb00"
+      },
+      "vertices": [
+        {
+          "value": 1,
+          "instruction": "00418a5e",
+          "objectOffset": "0x99dd0"
+        },
+        {
+          "value": 2,
+          "instruction": "00418a77",
+          "objectOffset": "0x99dd4"
+        },
+        {
+          "value": 3,
+          "instruction": "00418a88",
+          "objectOffset": "0x99dd8"
+        },
+        {
+          "value": 4,
+          "instruction": "00418a9e",
+          "objectOffset": "0x99ddc"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 0,
+          "instruction": "00418fc0",
+          "objectOffset": "0xb77a0"
+        },
+        {
+          "value": 0,
+          "instruction": "00418fd1",
+          "objectOffset": "0xb77a4"
+        },
+        {
+          "value": 0,
+          "instruction": "00418fe8",
+          "objectOffset": "0xb77a8"
+        },
+        {
+          "value": 2,
+          "instruction": "00418ffc",
+          "objectOffset": "0xb77ac"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "vertexCount": {
+        "value": 4,
+        "instruction": "00418b1d",
+        "objectOffset": "0x9cb04"
+      },
+      "vertices": [
+        {
+          "value": 5,
+          "instruction": "00418ac7",
+          "objectOffset": "0x99df0"
+        },
+        {
+          "value": 1,
+          "instruction": "00418ae0",
+          "objectOffset": "0x99df4"
+        },
+        {
+          "value": 4,
+          "instruction": "00418aeb",
+          "objectOffset": "0x99df8"
+        },
+        {
+          "value": 6,
+          "instruction": "00418b0a",
+          "objectOffset": "0x99dfc"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 3,
+          "instruction": "0041901b",
+          "objectOffset": "0xb77c0"
+        },
+        {
+          "value": 1,
+          "instruction": "00419026",
+          "objectOffset": "0xb77c4"
+        },
+        {
+          "value": 0,
+          "instruction": "00419038",
+          "objectOffset": "0xb77c8"
+        },
+        {
+          "value": 0,
+          "instruction": "00419055",
+          "objectOffset": "0xb77cc"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "vertexCount": {
+        "value": 4,
+        "instruction": "00418b7d",
+        "objectOffset": "0x9cb08"
+      },
+      "vertices": [
+        {
+          "value": 7,
+          "instruction": "00418b28",
+          "objectOffset": "0x99e10"
+        },
+        {
+          "value": 8,
+          "instruction": "00418b46",
+          "objectOffset": "0x99e14"
+        },
+        {
+          "value": 1,
+          "instruction": "00418b5a",
+          "objectOffset": "0x99e18"
+        },
+        {
+          "value": 5,
+          "instruction": "00418b6d",
+          "objectOffset": "0x99e1c"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 0,
+          "instruction": "00419060",
+          "objectOffset": "0xb77e0"
+        },
+        {
+          "value": 4,
+          "instruction": "00419083",
+          "objectOffset": "0xb77e4"
+        },
+        {
+          "value": 2,
+          "instruction": "0041908e",
+          "objectOffset": "0xb77e8"
+        },
+        {
+          "value": 0,
+          "instruction": "004190a3",
+          "objectOffset": "0xb77ec"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "vertexCount": {
+        "value": 4,
+        "instruction": "00418be7",
+        "objectOffset": "0x9cb0c"
+      },
+      "vertices": [
+        {
+          "value": 8,
+          "instruction": "00418b9c",
+          "objectOffset": "0x99e30"
+        },
+        {
+          "value": 9,
+          "instruction": "00418baf",
+          "objectOffset": "0x99e34"
+        },
+        {
+          "value": 2,
+          "instruction": "00418bba",
+          "objectOffset": "0x99e38"
+        },
+        {
+          "value": 1,
+          "instruction": "00418bdc",
+          "objectOffset": "0x99e3c"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 5,
+          "instruction": "004190ba",
+          "objectOffset": "0xb7800"
+        },
+        {
+          "value": 0,
+          "instruction": "004190cd",
+          "objectOffset": "0xb7804"
+        },
+        {
+          "value": 0,
+          "instruction": "004190e7",
+          "objectOffset": "0xb7808"
+        },
+        {
+          "value": 3,
+          "instruction": "004190f2",
+          "objectOffset": "0xb780c"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "vertexCount": {
+        "value": 4,
+        "instruction": "00418c50",
+        "objectOffset": "0x9cb10"
+      },
+      "vertices": [
+        {
+          "value": 10,
+          "instruction": "00418bff",
+          "objectOffset": "0x99e50"
+        },
+        {
+          "value": 11,
+          "instruction": "00418c1b",
+          "objectOffset": "0x99e54"
+        },
+        {
+          "value": 9,
+          "instruction": "00418c26",
+          "objectOffset": "0x99e58"
+        },
+        {
+          "value": 8,
+          "instruction": "00418c45",
+          "objectOffset": "0x99e5c"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 0,
+          "instruction": "0041910e",
+          "objectOffset": "0xb7820"
+        },
+        {
+          "value": 0,
+          "instruction": "0041911f",
+          "objectOffset": "0xb7824"
+        },
+        {
+          "value": 4,
+          "instruction": "00419139",
+          "objectOffset": "0xb7828"
+        },
+        {
+          "value": 6,
+          "instruction": "0041914f",
+          "objectOffset": "0xb782c"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "vertexCount": {
+        "value": 4,
+        "instruction": "00418cb6",
+        "objectOffset": "0x9cb14"
+      },
+      "vertices": [
+        {
+          "value": 12,
+          "instruction": "00418c68",
+          "objectOffset": "0x99e70"
+        },
+        {
+          "value": 10,
+          "instruction": "00418c87",
+          "objectOffset": "0x99e74"
+        },
+        {
+          "value": 8,
+          "instruction": "00418c92",
+          "objectOffset": "0x99e78"
+        },
+        {
+          "value": 7,
+          "instruction": "00418cab",
+          "objectOffset": "0x99e7c"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 7,
+          "instruction": "00419168",
+          "objectOffset": "0xb7840"
+        },
+        {
+          "value": 5,
+          "instruction": "00419178",
+          "objectOffset": "0xb7844"
+        },
+        {
+          "value": 0,
+          "instruction": "0041918b",
+          "objectOffset": "0xb7848"
+        },
+        {
+          "value": 0,
+          "instruction": "004191a5",
+          "objectOffset": "0xb784c"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "vertexCount": {
+        "value": 4,
+        "instruction": "00418d27",
+        "objectOffset": "0x9cb18"
+      },
+      "vertices": [
+        {
+          "value": 13,
+          "instruction": "00418cd4",
+          "objectOffset": "0x99e90"
+        },
+        {
+          "value": 14,
+          "instruction": "00418ced",
+          "objectOffset": "0x99e94"
+        },
+        {
+          "value": 10,
+          "instruction": "00418cf8",
+          "objectOffset": "0x99e98"
+        },
+        {
+          "value": 12,
+          "instruction": "00418d17",
+          "objectOffset": "0x99e9c"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 0,
+          "instruction": "004191b0",
+          "objectOffset": "0xb7860"
+        },
+        {
+          "value": 8,
+          "instruction": "004191d0",
+          "objectOffset": "0xb7864"
+        },
+        {
+          "value": 6,
+          "instruction": "004191e3",
+          "objectOffset": "0xb7868"
+        },
+        {
+          "value": 0,
+          "instruction": "004191f0",
+          "objectOffset": "0xb786c"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "vertexCount": {
+        "value": 4,
+        "instruction": "00418d8a",
+        "objectOffset": "0x9cb1c"
+      },
+      "vertices": [
+        {
+          "value": 14,
+          "instruction": "00418d37",
+          "objectOffset": "0x99eb0"
+        },
+        {
+          "value": 15,
+          "instruction": "00418d53",
+          "objectOffset": "0x99eb4"
+        },
+        {
+          "value": 11,
+          "instruction": "00418d67",
+          "objectOffset": "0x99eb8"
+        },
+        {
+          "value": 10,
+          "instruction": "00418d7a",
+          "objectOffset": "0x99ebc"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 0,
+          "instruction": "0041920d",
+          "objectOffset": "0xb7880"
+        },
+        {
+          "value": 9,
+          "instruction": "0041921b",
+          "objectOffset": "0xb7884"
+        },
+        {
+          "value": 0,
+          "instruction": "00419231",
+          "objectOffset": "0xb7888"
+        },
+        {
+          "value": 7,
+          "instruction": "00419248",
+          "objectOffset": "0xb788c"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "vertexCount": {
+        "value": 4,
+        "instruction": "00418df9",
+        "objectOffset": "0x9cb20"
+      },
+      "vertices": [
+        {
+          "value": 15,
+          "instruction": "00418dac",
+          "objectOffset": "0x99ed0"
+        },
+        {
+          "value": 16,
+          "instruction": "00418dbc",
+          "objectOffset": "0x99ed4"
+        },
+        {
+          "value": 17,
+          "instruction": "00418dcd",
+          "objectOffset": "0x99ed8"
+        },
+        {
+          "value": 11,
+          "instruction": "00418de9",
+          "objectOffset": "0x99edc"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 0,
+          "instruction": "0041925b",
+          "objectOffset": "0xb78a0"
+        },
+        {
+          "value": 10,
+          "instruction": "00419272",
+          "objectOffset": "0xb78a4"
+        },
+        {
+          "value": 0,
+          "instruction": "00419285",
+          "objectOffset": "0xb78a8"
+        },
+        {
+          "value": 8,
+          "instruction": "0041929c",
+          "objectOffset": "0xb78ac"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "vertexCount": {
+        "value": 5,
+        "instruction": "00418e73",
+        "objectOffset": "0x9cb24"
+      },
+      "vertices": [
+        {
+          "value": 16,
+          "instruction": "00418e09",
+          "objectOffset": "0x99ef0"
+        },
+        {
+          "value": 18,
+          "instruction": "00418e2b",
+          "objectOffset": "0x99ef4"
+        },
+        {
+          "value": 19,
+          "instruction": "00418e3b",
+          "objectOffset": "0x99ef8"
+        },
+        {
+          "value": 20,
+          "instruction": "00418e4c",
+          "objectOffset": "0x99efc"
+        },
+        {
+          "value": 17,
+          "instruction": "00418e68",
+          "objectOffset": "0x99f00"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 0,
+          "instruction": "004192af",
+          "objectOffset": "0xb78c0"
+        },
+        {
+          "value": 0,
+          "instruction": "004192c9",
+          "objectOffset": "0xb78c4"
+        },
+        {
+          "value": 0,
+          "instruction": "004192d4",
+          "objectOffset": "0xb78c8"
+        },
+        {
+          "value": 11,
+          "instruction": "004192f4",
+          "objectOffset": "0xb78cc"
+        },
+        {
+          "value": 9,
+          "instruction": "00419307",
+          "objectOffset": "0xb78d0"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "vertexCount": {
+        "value": 4,
+        "instruction": "00418ee1",
+        "objectOffset": "0x9cb28"
+      },
+      "vertices": [
+        {
+          "value": 17,
+          "instruction": "00418e88",
+          "objectOffset": "0x99f10"
+        },
+        {
+          "value": 20,
+          "instruction": "00418eaa",
+          "objectOffset": "0x99f14"
+        },
+        {
+          "value": 21,
+          "instruction": "00418eb5",
+          "objectOffset": "0x99f18"
+        },
+        {
+          "value": 22,
+          "instruction": "00418ecb",
+          "objectOffset": "0x99f1c"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 10,
+          "instruction": "00419317",
+          "objectOffset": "0xb78e0"
+        },
+        {
+          "value": 0,
+          "instruction": "00419330",
+          "objectOffset": "0xb78e4"
+        },
+        {
+          "value": 12,
+          "instruction": "00419341",
+          "objectOffset": "0xb78e8"
+        },
+        {
+          "value": 0,
+          "instruction": "0041935a",
+          "objectOffset": "0xb78ec"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "vertexCount": {
+        "value": 8,
+        "instruction": "00418f9c",
+        "objectOffset": "0x9cb2c"
+      },
+      "vertices": [
+        {
+          "value": 22,
+          "instruction": "00418ef4",
+          "objectOffset": "0x99f30"
+        },
+        {
+          "value": 21,
+          "instruction": "00418f07",
+          "objectOffset": "0x99f34"
+        },
+        {
+          "value": 23,
+          "instruction": "00418f23",
+          "objectOffset": "0x99f38"
+        },
+        {
+          "value": 24,
+          "instruction": "00418f36",
+          "objectOffset": "0x99f3c"
+        },
+        {
+          "value": 25,
+          "instruction": "00418f49",
+          "objectOffset": "0x99f40"
+        },
+        {
+          "value": 26,
+          "instruction": "00418f65",
+          "objectOffset": "0x99f44"
+        },
+        {
+          "value": 27,
+          "instruction": "00418f79",
+          "objectOffset": "0x99f48"
+        },
+        {
+          "value": 28,
+          "instruction": "00418f8c",
+          "objectOffset": "0x99f4c"
+        }
+      ],
+      "neighbors": [
+        {
+          "value": 11,
+          "instruction": "0041936b",
+          "objectOffset": "0xb7900"
+        },
+        {
+          "value": 0,
+          "instruction": "00419381",
+          "objectOffset": "0xb7904"
+        },
+        {
+          "value": 0,
+          "instruction": "00419395",
+          "objectOffset": "0xb7908"
+        },
+        {
+          "value": 0,
+          "instruction": "004193a9",
+          "objectOffset": "0xb790c"
+        },
+        {
+          "value": 0,
+          "instruction": "004193bd",
+          "objectOffset": "0xb7910"
+        },
+        {
+          "value": 0,
+          "instruction": "004193d1",
+          "objectOffset": "0xb7914"
+        },
+        {
+          "value": 0,
+          "instruction": "004193e5",
+          "objectOffset": "0xb7918"
+        },
+        {
+          "value": 0,
+          "instruction": "004193f9",
+          "objectOffset": "0xb791c"
+        }
+      ]
+    }
+  ],
+  "target": [
+    {
+      "value": 150,
+      "instruction": "00419400",
+      "objectOffset": "0xc7b44"
+    },
+    {
+      "value": -200,
+      "instruction": "0041940b",
+      "objectOffset": "0xc7bd8"
+    },
+    {
+      "value": 10,
+      "instruction": "00419416",
+      "objectOffset": "0xc7c6c"
+    }
+  ],
+  "start": [
+    {
+      "value": -100,
+      "instruction": "00419421",
+      "objectOffset": "0xc7d00"
+    },
+    {
+      "value": -250,
+      "instruction": "0041942c",
+      "objectOffset": "0xc7d94"
+    },
+    {
+      "value": 60,
+      "instruction": "00419437",
+      "objectOffset": "0xc7e28"
+    }
+  ],
+  "initialSurface": {
+    "value": 1,
+    "instruction": "00419442",
+    "objectOffset": "0xc7ebc"
+  },
+  "unclassifiedParameter": {
+    "value": 64,
+    "instruction": "0041944d",
+    "objectOffset": "0xc7f50"
+  },
+  "par": {
+    "value": 3,
+    "instruction": "00419458",
+    "objectOffset": "0xc7fe4"
+  },
+  "heightRange": [
+    10,
+    60
+  ]
+}
