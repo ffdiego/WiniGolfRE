@@ -19,7 +19,7 @@ internal sealed class GameSession(Course[] courses)
     public bool AtEnd => Shot is not null && FrameIndex == Shot.Steps;
     public EndReason? Outcome => AtEnd ? Shot!.Reason : Shot is null ? null : EndReason.Moving;
     public int Strokes => Shot is null ? 0 : AtEnd ? Shot.StrokeCount : priorStrokes + 1;
-    public double CaptureProgress => Outcome == EndReason.Captured ? Math.Clamp((Time - Shot!.Steps * .02) / .35, 0, 1) : 0;
+    public double CaptureProgress => Outcome == EndReason.Captured ? Math.Clamp((Time - Shot!.Steps * .02) / .65, 0, 1) : 0;
     public bool CanShoot => Shot is null || AtEnd && (Outcome is EndReason.Stopped or EndReason.BounceLimitReset)
         && Strokes < 7 && Course.Contains(Ball.SurfaceId, Ball.Position);
     public bool Completed => Outcome is EndReason.Captured or EndReason.StrokeLimitReached || AtEnd && Strokes >= 7;
@@ -63,7 +63,7 @@ internal sealed class GameSession(Course[] courses)
             if (Shot is null) return current.Position;
             if (AtEnd)
             {
-                var t = CaptureProgress;
+                var t = Math.Clamp(CaptureProgress / .35, 0, 1);
                 return Lerp(current.Position, Course.Target, t);
             }
             var next = Shot.Frames[FrameIndex + 1].State;

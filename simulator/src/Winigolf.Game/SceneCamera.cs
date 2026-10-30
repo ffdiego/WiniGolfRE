@@ -10,7 +10,16 @@ internal sealed class SceneCamera
 {
     public bool TopDown { get; set; }
     public float Yaw { get; set; }
-    public float Zoom { get; set; } = 1;
+    private float zoom = 1;
+    public float Zoom { get => zoom; set { zoom = value; ZoomTarget = value; } }
+    public float ZoomTarget { get; private set; } = 1;
+    public void RequestZoom(float wheel) => ZoomTarget = Math.Clamp(ZoomTarget * MathF.Pow(1.15f, wheel), .5f, 3f);
+    public void AdvanceZoom(double elapsed)
+    {
+        if (!double.IsFinite(elapsed) || elapsed < 0) throw new ArgumentOutOfRangeException(nameof(elapsed));
+        zoom += (ZoomTarget - zoom) * (float)(1 - Math.Exp(-12 * elapsed));
+        if (Math.Abs(ZoomTarget - zoom) < .00001f) zoom = ZoomTarget;
+    }
     public Camera3D Value { get; private set; }
     public int Width { get; private set; }
     public int Height { get; private set; }
@@ -64,16 +73,7 @@ internal sealed class SceneCamera
             Up = TopDown ? new Vector3(0, 0, -1) : Vector3.UnitY,
             FovY = span, Projection = CameraProjection.Orthographic
         };
-        // Fit actual projected vertices, not just a bounding sphere. Long flat courses
-        // would otherwise occupy a small fraction of the playable viewport.
-        for (var attempt = 0; attempt < 8; attempt++)
-        {
-            var projected = points.Select(p => Raylib.GetWorldToScreenEx(p, camera, width, height)).ToArray();
-            var ratio = Math.Max(projected.Max(p => Math.Abs(p.X - width / 2f)) / Math.Max(1, width / 2f - 55),
-                projected.Max(p => Math.Abs(p.Y - height / 2f)) / Math.Max(1, height / 2f - 55));
-            if (Math.Abs(ratio - 1) < .002f) break;
-            span *= ratio; camera.FovY = span;
-        }
+        // The course bounding sphere fixes scale independently of yaw.
         camera.FovY /= Zoom;
         Value = camera;
     }

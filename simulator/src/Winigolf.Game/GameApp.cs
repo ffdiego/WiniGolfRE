@@ -82,6 +82,7 @@ internal sealed class GameApp : IDisposable
         var projected = Camera.Project(Session.VisualPosition);
         if (Vector2.DistanceSquared(point, projected) > 22 * 22) return false;
         aimButton = button; aimMode = button == MouseButton.Left ? ShotMode.Mode1 : ShotMode.Mode2;
+        Camera.Zoom = Camera.Zoom; // Freeze scale while dragging the shot.
         anchor = endpoint = point; aiming = true; return true;
     }
 
@@ -129,7 +130,7 @@ internal sealed class GameApp : IDisposable
         if (over && !aiming && !Camera.IsTurning)
         {
             var wheel = GetMouseWheelMove();
-            Camera.Zoom = Math.Clamp(Camera.Zoom + wheel * .1f, .65f, 1.8f);
+            Camera.RequestZoom(wheel);
             if (IsMouseButtonDown(MouseButton.Middle) && !Camera.TopDown) Camera.Yaw += GetMouseDelta().X * .007f;
         }
         Camera.Fit(Session.Course, (int)viewport.Width, (int)viewport.Height);
@@ -152,7 +153,11 @@ internal sealed class GameApp : IDisposable
         }
     }
 
-    public void AdvancePresentation(double elapsed) => turns.Update(Session, Camera, elapsed);
+    public void AdvancePresentation(double elapsed)
+    {
+        turns.Update(Session, Camera, elapsed);
+        if (!aiming) Camera.AdvanceZoom(elapsed);
+    }
 
     private void Text(string text, float x, float y, float size, Color color) => DrawTextEx(font, text, new Vector2(x, y), size, .3f, color);
     private void Box(Rectangle rect, Color color, float round = .12f) => DrawRectangleRounded(rect, round, 12, color);

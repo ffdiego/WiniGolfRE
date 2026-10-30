@@ -8,6 +8,23 @@ internal static class CameraChecks
     public static void Run(GameApp app, Action<bool, string> check, string directory)
     {
         var a = new SceneCamera(); var b = new SceneCamera();
+        foreach (var course in app.Session.Courses)
+        {
+            a.Yaw = 0; a.Fit(course, 936, 620); var span = a.Value.FovY;
+            for (var angle = 0; angle < 360; angle += 15)
+            {
+                a.Yaw = angle * MathF.PI / 180; a.Fit(course, 936, 620);
+                check(Math.Abs(a.Value.FovY - span) < .0001f, "Orthographic scale stays fixed through rotation: " + course.Id + "/" + angle);
+            }
+        }
+        a = new SceneCamera(); b = new SceneCamera();
+        a.RequestZoom(2); b.RequestZoom(2); a.AdvanceZoom(.1);
+        for (var i = 0; i < 10; i++) b.AdvanceZoom(.01);
+        check(a.Zoom > 1 && a.Zoom < a.ZoomTarget && Math.Abs(a.Zoom - b.Zoom) < .000001f,
+            "Wheel zoom transitions smoothly and independently of frame timing");
+        a.AdvanceZoom(10);
+        check(a.Zoom == a.ZoomTarget, "Wheel zoom settles at requested scale");
+        a = new SceneCamera(); b = new SceneCamera();
         a.BeginTurn(new Random(123)); b.BeginTurn(new Random(123));
         check(a.IsTurning && Math.Abs(a.TurnDelta) >= 20 * MathF.PI / 180 - 1e-6 &&
             Math.Abs(a.TurnDelta) <= MathF.PI + 1e-6 && a.TurnDuration is >= .2 and <= 1.8,

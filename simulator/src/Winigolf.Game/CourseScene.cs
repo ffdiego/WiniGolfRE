@@ -11,13 +11,14 @@ internal sealed class CourseScene
 {
     private readonly record struct Triangle(Vector3 A, Vector3 B, Vector3 C, Color Color);
     private readonly List<Triangle> triangles = [];
+    private readonly BallVisual ballVisual = new();
     public int TriangleCount => triangles.Count;
     public int WallCount { get; private set; }
     private readonly List<(Vector3 A, Vector3 B)> seams = [];
 
     public void Build(Course course)
     {
-        triangles.Clear(); seams.Clear(); WallCount = 0;
+        triangles.Clear(); seams.Clear(); WallCount = 0; ballVisual.Reset();
         var floor = (float)course.Vertices.Values.Min(v => v.Z) - 24;
         var seenWalls = new HashSet<(int, int)>();
         foreach (var surface in course.Surfaces)
@@ -70,14 +71,7 @@ internal sealed class CourseScene
         var flagC = target + Vector3.UnitY * 24;
         var coral = new Color(244, 130, 106, 255);
         DrawTriangle3D(flagA, flagB, flagC, coral); DrawTriangle3D(flagC, flagB, flagA, coral);
-        var radius = 4 * (1 - (float)session.CaptureProgress);
-        if (radius > .05f)
-        {
-            var p = SceneCamera.World(session.VisualPosition);
-            DrawCylinderEx(p + Vector3.UnitY * .12f, p + Vector3.UnitY * .2f, radius + 1.5f, radius + 1.5f, 24, new Color(30, 64, 50, 255));
-            DrawSphereEx(p + Vector3.UnitY * radius, radius, 12, 16, new Color(248, 249, 233, 255));
-            DrawSphereEx(p + new Vector3(-radius * .25f, radius * 1.5f, radius * .25f), radius * .2f, 4, 6, Color.White);
-        }
+        ballVisual.Draw(session, target);
         EndMode3D();
     }
 }
