@@ -6,17 +6,23 @@ O primeiro núcleo C# e console já podem ser executados: [instruções do simul
 
 A validação mais recente compara o perfil original do simulador com uma política experimental corrigida: [15-validacao-de-cantos.md](15-validacao-de-cantos.md). O segundo perfil é uma modernização explícita e permanece opcional.
 
-Já há uma interface para experimentar os campos, puxar a bola e comparar os perfis: [16-laboratorio-visual.md](16-laboratorio-visual.md). Abrir pelo [iniciador do laboratório](../simulator/abrir-laboratorio.cmd).
+Já há uma interface para experimentar os campos, puxar a bola e comparar os perfis: [16-laboratorio-visual.md](16-laboratorio-visual.md). Executar o projeto Winigolf.Viewer.
 
 A [revisão de mira e buraco](17-revisao-mira-e-buraco.md) corrige a força do botão esquerdo, acrescenta o direito e torna a captura visível; também registra as evidências de rotação aleatória da câmera.
 
-A primeira versão jogável com raylib está em [18-primeiro-cliente-raylib.md](18-primeiro-cliente-raylib.md): 36 campos, câmeras inclinada/planta, animação interpolada e progressão. Abrir com [abrir-jogo.cmd](../simulator/abrir-jogo.cmd); o laboratório continua separado.
+A primeira versão jogável com raylib está em [18-primeiro-cliente-raylib.md](18-primeiro-cliente-raylib.md): 36 campos, câmeras inclinada/planta, animação interpolada e progressão. Executar o projeto Winigolf.Game; o laboratório continua separado.
 
 A atualização [19-sons-originais-e-ajuste-da-mira.md](19-sons-originais-e-ajuste-da-mira.md) adiciona seis efeitos recuperados do executável e força do esquerdo ajustável em 1×/2×/3×, com padrão 2×.
 
 **Correção importante:** [20-correcao-da-curva-de-tacada.md](20-correcao-da-curva-de-tacada.md) substitui a fórmula anterior de mira após auditoria dos bytes x87: a curva é L^1,5, com multiplicação por sqrt(L) e 0,1. O padrão atual do cliente é **1× da fórmula corrigida**; a seção 2 da especificação 13 já incorpora a errata.
 
 O cliente agora usa [projeção ortográfica e virada aleatória entre tacadas](21-camera-ortografica-e-virada.md). A perspectiva foi removida; a câmera gira antes de liberar a próxima puxada.
+
+As atualizações da apresentação incluem [bola com giro e queda](22-bola-com-giro-e-captura.md), [escala fixa e zoom suave](23-escala-fixa-e-zoom-suave.md), [opções de câmera](24-opcoes-de-camera-e-foco-na-bola.md), [recentralização e acompanhamento](25-transicao-conjunta-e-enquadramento.md) e [interface com tipografia bold](26-interface-minimalista-e-tipografia.md).
+
+O cliente oferece [partidas locais de 1 a 6 jogadores](27-partida-local-com-varios-jogadores.md), com cadastro de nomes, cores, bolas transparentes e placar individual.
+
+A [cena ocupa a janela inteira](28-cena-na-janela-inteira-e-captura-com-velocidade.md), com interface sobreposta e uma animação de entrada no buraco que usa a velocidade de chegada, gravidade e contato amortecido com a borda.
 
 - [Dados dos 36 campos](dados/campos/) e [resumo](dados/campos-resumo.json).
 - [Extração e catálogo](08-extracao-dos-36-campos.md), [atlas](diagramas/campos-atlas.svg) e [auditoria geométrica](dados/auditoria-geometria-fisica.json).

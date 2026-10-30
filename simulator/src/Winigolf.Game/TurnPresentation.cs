@@ -22,8 +22,14 @@ internal sealed class TurnPresentation(Random random)
         }
         if (!started && session.CanShoot)
         {
-            started = true; camera.BeginTurn(random);
+            started = true;
+            System.Numerics.Vector3? destination = camera.Options.CenterOnBallAtTurnStart
+                ? SceneCamera.World(session.VisualPosition) + System.Numerics.Vector3.UnitY * 4 : null;
+            if (camera.Options.AutoRotateBetweenShots || destination is not null)
+                camera.BeginTurn(random, destination, camera.Options.AutoRotateBetweenShots);
         }
         if (!session.Paused) camera.AdvanceTurn(elapsed);
+        if (!session.Paused && session.Outcome == EndReason.Moving)
+            camera.FollowBall(session.VisualPosition, elapsed);
     }
 }

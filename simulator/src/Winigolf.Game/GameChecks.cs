@@ -20,6 +20,8 @@ internal static class GameChecks
             checks.Add(description);
         }
         var courses = app.Session.Courses;
+        CaptureMotionChecks.Run(courses[0], Check);
+        LocalMatchChecks.Run(courses, Check);
         CameraChecks.Run(app, Check, directory);
         AudioChecks.Run(app, Check);
         var a = new GameSession(courses); var b = new GameSession(courses);
@@ -122,6 +124,8 @@ internal static class GameChecks
         for (var index = 0; index < courses.Length; index++)
         {
             app.Select(index);
+            // Validate the optional whole-course framing independently of ball focus.
+            app.Camera.Focus = null;
             var expectedWalls = courses[index].Surfaces.SelectMany(s => s.VertexIds.Select((id, edge) =>
                     (A: Math.Min(id, s.VertexIds[(edge + 1) % s.VertexIds.Count]), B: Math.Max(id, s.VertexIds[(edge + 1) % s.VertexIds.Count]), Neighbor: s.Neighbors[edge])))
                 .Where(e => e.Neighbor == 0).Select(e => (e.A, e.B)).Distinct().Count();
@@ -158,6 +162,35 @@ internal static class GameChecks
                     app.Capture(Path.Combine(directory, $"{index + 1:00}-{(topDown ? "top" : "orthographic")}.png"));
             }
         }
+        app.ConfigurePlayers(["Ana"]); app.Select(0);
+        app.Camera.TopDown = false; app.Camera.Zoom = 3;
+        app.Camera.Focus = SceneCamera.World(app.Session.Course.Target);
+        app.Session.Shoot(new P3(10, 0, 0));
+        app.Session.Advance(app.Session.Shot!.Steps * Simulator.StepSeconds);
+        foreach (var stage in new[] { ("entry", 0.0), ("lip", .06), ("fall", .10), ("hidden", .64) })
+        {
+            app.Session.Advance(stage.Item2); app.Draw(false); app.Draw(false);
+            app.Capture(Path.Combine(directory, $"capture-{stage.Item1}.png"));
+        }
+        Check(app.Camera.Width == GetScreenWidth() && app.Camera.Height == GetScreenHeight(),
+            "Game camera renders across the complete window dimensions");
+        Check(app.OverHud(new Vector2(GetScreenWidth() - 100, 40)) &&
+            app.OverHud(new Vector2(GetScreenWidth() - 100, 200)) &&
+            !app.OverHud(new Vector2(GetScreenWidth() / 2, GetScreenHeight() / 2)),
+            "HUD blocks world input while the middle of the full-window scene stays playable");
+        app.ConfigurePlayers(["Ana", "Bruno", "Carla"]);
+        app.Select(0);
+        app.Session.Shoot(new(1, 0, 0)); app.Match.Advance(20);
+        app.Session.Shoot(new(3, 0, 0)); app.Match.Advance(20);
+        app.AdvancePresentation(10); app.Draw(false); app.Draw(false);
+        app.Capture(Path.Combine(directory, "multiplayer.png"));
+        Check(app.Match.ActiveIndex == 2 && app.Match.Players[0].Session.Strokes == 1 && app.Match.Players[1].Session.Strokes == 1,
+            "Multiplayer UI renders the active player, saved ghost balls and per-player strokes");
+        app.ConfigurePlayers(["Ana", "Bruno", "Carla", "Daniel", "Érica", "Fábio"]);
+        app.OpenPlayerSetup();
+        SetWindowSize(1024, 720); app.Draw(false); app.Draw(false);
+        app.Capture(Path.Combine(directory, "player-setup.png"));
+        Check(!app.StartAim(app.Camera.Project(app.Session.VisualPosition), MouseButton.Left), "Player setup blocks shooting");
         File.WriteAllText(Path.Combine(directory, "checks.json"), JsonSerializer.Serialize(new
         {
             passed = checks.Count, failed = 0, checks,

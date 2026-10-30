@@ -4,7 +4,7 @@ Implementado em 28/10/2026, em `simulator/src/Winigolf.Viewer`. É uma ferrament
 
 ## Abrir e experimentar
 
-Executar [abrir-laboratorio.cmd](../simulator/abrir-laboratorio.cmd), com o SDK .NET 10 instalado no Windows, ou, na raiz deste repositório:
+Com o SDK .NET 10 instalado no Windows, executar na raiz deste repositório:
 
 ```powershell
 dotnet run --project simulator/src/Winigolf.Viewer

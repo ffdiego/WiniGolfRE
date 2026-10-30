@@ -8,7 +8,7 @@ Implementado em 28/10/2026. Projeto `simulator/src/Winigolf.Game`, separado do l
 
 No Windows, com SDK .NET 10:
 
-- Abrir [abrir-jogo.cmd](../simulator/abrir-jogo.cmd).
+- No Visual Studio, definir Winigolf.Game como projeto de inicialização.
 - Ou, na raiz deste repositório: `dotnet run --project simulator/src/Winigolf.Game`.
 
 Raylib-cs 8.1.0 / raylib 6.0 são restaurados do NuGet.org; os textos de licença estão em [simulator/licenses](../simulator/licenses/). O primeiro build precisa baixar o pacote. Testado no Windows x64 deste workspace; não foram validadas outras plataformas, nem se criou instalador ou distribuição autossuficiente.

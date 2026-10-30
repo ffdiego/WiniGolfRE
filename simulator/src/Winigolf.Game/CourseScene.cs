@@ -11,14 +11,14 @@ internal sealed class CourseScene
 {
     private readonly record struct Triangle(Vector3 A, Vector3 B, Vector3 C, Color Color);
     private readonly List<Triangle> triangles = [];
-    private readonly BallVisual ballVisual = new();
+    private readonly Dictionary<GameSession, BallVisual> ballVisuals = [];
     public int TriangleCount => triangles.Count;
     public int WallCount { get; private set; }
     private readonly List<(Vector3 A, Vector3 B)> seams = [];
 
     public void Build(Course course)
     {
-        triangles.Clear(); seams.Clear(); WallCount = 0; ballVisual.Reset();
+        triangles.Clear(); seams.Clear(); WallCount = 0; ballVisuals.Clear();
         var floor = (float)course.Vertices.Values.Min(v => v.Z) - 24;
         var seenWalls = new HashSet<(int, int)>();
         foreach (var surface in course.Surfaces)
@@ -59,7 +59,7 @@ internal sealed class CourseScene
         triangles.Add(new(c, b, a, color)); triangles.Add(new(d, c, a, color));
     }
 
-    public void Draw(GameSession session, SceneCamera camera)
+    public void Draw(GameSession session, SceneCamera camera, IReadOnlyList<LocalPlayer>? players = null)
     {
         BeginMode3D(camera.Value);
         foreach (var t in triangles) DrawTriangle3D(t.A, t.B, t.C, t.Color);
@@ -71,7 +71,20 @@ internal sealed class CourseScene
         var flagC = target + Vector3.UnitY * 24;
         var coral = new Color(244, 130, 106, 255);
         DrawTriangle3D(flagA, flagB, flagC, coral); DrawTriangle3D(flagC, flagB, flagA, coral);
-        ballVisual.Draw(session, target);
+        if (players is not null)
+        {
+            Rlgl.DisableDepthMask();
+            foreach (var player in players.Where(p => !ReferenceEquals(p.Session, session) && p.Session.Outcome != EndReason.Captured)
+                .OrderByDescending(p => Vector3.DistanceSquared(SceneCamera.World(p.Session.VisualPosition), camera.Value.Position)))
+            {
+                var center = SceneCamera.World(player.Session.VisualPosition) + Vector3.UnitY * 4;
+                var color = player.Color; color.A = 90;
+                DrawSphereEx(center, 4, 12, 16, color);
+            }
+            Rlgl.EnableDepthMask();
+        }
+        if (!ballVisuals.TryGetValue(session, out var ballVisual)) ballVisuals[session] = ballVisual = new();
+        ballVisual.Draw(session, target, players?.FirstOrDefault(p => ReferenceEquals(p.Session, session))?.Color ?? new Color(248, 249, 233, 255));
         EndMode3D();
     }
 }

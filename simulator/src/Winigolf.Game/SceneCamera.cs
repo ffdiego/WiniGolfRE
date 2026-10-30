@@ -8,6 +8,11 @@ namespace Winigolf.Game;
 
 internal sealed class SceneCamera
 {
+    public CameraOptions Options { get; init; } = new();
+    public Vector3? Focus { get; set; }
+    public float RightOverlayWidth { get; init; }
+    public float TopOverlayHeight { get; init; }
+    public float BottomOverlayHeight { get; init; }
     public bool TopDown { get; set; }
     public float Yaw { get; set; }
     private float zoom = 1;
@@ -28,15 +33,20 @@ internal sealed class SceneCamera
     public float TurnDelta { get; private set; }
     private float turnStart;
     private double turnElapsed;
+    private Vector3? focusStart, focusDestination;
 
-    public void BeginTurn(Random random)
+    public void BeginTurn(Random random, Vector3? destination = null, bool rotate = true)
     {
         var steps = random.Next(10, 91);
         TurnDelta = (random.Next(2) == 0 ? -1 : 1) * steps * 2 * MathF.PI / 180;
         TurnDuration = steps * .02;
+        if (!rotate) { TurnDelta = 0; TurnDuration = .5; }
+        focusStart = Focus ?? (Width > 0 ? Value.Target : destination);
+        focusDestination = destination;
+        if (Focus is null && destination is not null) Focus = focusStart;
         turnStart = Yaw; turnElapsed = 0;
         // Keep the optional map view steady; prepare the next inclined angle without delay.
-        if (TopDown) { Yaw += TurnDelta; IsTurning = false; }
+        if (TopDown) { Yaw += TurnDelta; if (destination is not null) Focus = destination; IsTurning = false; }
         else IsTurning = true;
     }
 
@@ -48,6 +58,8 @@ internal sealed class SceneCamera
         var t = turnElapsed / TurnDuration;
         var smooth = t * t * (3 - 2 * t);
         Yaw = turnStart + TurnDelta * (float)smooth;
+        if (focusStart is { } start && focusDestination is { } finish)
+            Focus = Vector3.Lerp(start, finish, (float)smooth);
         if (turnElapsed >= TurnDuration) IsTurning = false;
     }
 
@@ -59,8 +71,9 @@ internal sealed class SceneCamera
         Width = width; Height = height;
         var points = course.Vertices.Values.Select(World).ToArray();
         var min = points.Aggregate(Vector3.Min); var max = points.Aggregate(Vector3.Max);
-        var target = (min + max) / 2;
-        var radius = points.Max(p => Vector3.Distance(p, target)) + 35;
+        var courseCenter = (min + max) / 2;
+        var target = Focus ?? courseCenter;
+        var radius = points.Max(p => Vector3.Distance(p, courseCenter)) + 35;
         var aspect = (float)width / height;
         // A bounding sphere makes framing safe at every yaw, including tall/narrow fields.
         var span = 2.2f * radius * Math.Max(1, 1 / aspect);
@@ -79,6 +92,30 @@ internal sealed class SceneCamera
     }
 
     public Vector2 Project(P3 p) => Raylib.GetWorldToScreenEx(World(p), Value, Width, Height);
+
+    public void FollowBall(P3 position, double elapsed)
+    {
+        if (!Options.KeepBallInFrame || Width <= 0 || Height <= 0 || elapsed <= 0) return;
+        var point = Raylib.GetWorldToScreenEx(World(position) + Vector3.UnitY * 4, Value, Width, Height);
+        var margin = Math.Clamp(Options.EdgeMargin, 0, .45f);
+        var rightLimit = Math.Min(Width * (1 - margin), Width - RightOverlayWidth - 24);
+        var topLimit = Math.Max(Height * margin, TopOverlayHeight + 16);
+        var bottomLimit = Math.Min(Height * (1 - margin), Height - BottomOverlayHeight - 16);
+        var nearest = Vector2.Clamp(point, new(Width * margin, topLimit), new(rightLimit, bottomLimit));
+        var excess = point - nearest;
+        if (excess.LengthSquared() < .0001f) return;
+        var movement = excess * (float)(1 - Math.Exp(-Options.FollowSpeed * elapsed));
+        // Preserve visibility if a fast shot outruns the soft tracking at high zoom.
+        var remaining = point - movement;
+        movement += remaining - Vector2.Clamp(remaining,
+            new(Width * .03f, Math.Max(Height * .03f, TopOverlayHeight)),
+            new(Math.Min(Width * .97f, Width - RightOverlayWidth - 8), Math.Min(Height * .97f, Height - BottomOverlayHeight)));
+        var forward = Vector3.Normalize(Value.Target - Value.Position);
+        var right = Vector3.Normalize(Vector3.Cross(forward, Value.Up));
+        var up = Vector3.Normalize(Vector3.Cross(right, forward));
+        var correction = (right * movement.X - up * movement.Y) * (Value.FovY / Height);
+        Focus = (Focus ?? Value.Target) + correction;
+    }
 
     // Inverse projection on the ball's horizontal plane: original yaw/tilt compensation.
     // Camera state never enters the simulation of a shot already calculated.

@@ -8,6 +8,27 @@ internal static class CameraChecks
     public static void Run(GameApp app, Action<bool, string> check, string directory)
     {
         var a = new SceneCamera(); var b = new SceneCamera();
+        var transition = new SceneCamera { Focus = System.Numerics.Vector3.Zero };
+        var destination = new System.Numerics.Vector3(100, 0, 50);
+        transition.BeginTurn(new Random(123), destination);
+        check(transition.Focus == System.Numerics.Vector3.Zero, "Recentring starts without a target jump");
+        transition.AdvanceTurn(transition.TurnDuration / 2);
+        check(System.Numerics.Vector3.Distance(transition.Focus!.Value, destination / 2) < .0001f &&
+            Math.Abs(transition.Yaw - transition.TurnDelta / 2) < .0001f,
+            "Rotation and recentring share midpoint and duration");
+        transition.AdvanceTurn(10);
+        check(transition.Focus == destination && !transition.IsTurning, "Rotation and recentring finish together");
+        transition.Focus = SceneCamera.World(app.Session.Course.Start) + System.Numerics.Vector3.UnitY * 4;
+        transition.Fit(app.Session.Course, 936, 620);
+        var initialFocus = transition.Focus;
+        transition.FollowBall(app.Session.Course.Start, .1);
+        check(transition.Focus == initialFocus, "Safe-area camera stays still for a centered ball");
+        var remote = app.Session.Course.Start with { X = app.Session.Course.Start.X + 2000 };
+        var before = transition.Project(remote);
+        transition.FollowBall(remote, .1); transition.Fit(app.Session.Course, 936, 620);
+        var after = transition.Project(remote);
+        check(transition.Focus != initialFocus && Math.Abs(after.X - 468) < Math.Abs(before.X - 468),
+            "Safe-area camera smoothly reduces offscreen displacement");
         foreach (var course in app.Session.Courses)
         {
             a.Yaw = 0; a.Fit(course, 936, 620); var span = a.Value.FovY;
@@ -41,12 +62,25 @@ internal static class CameraChecks
         var turns = new TurnPresentation(new Random(19));
         var camera = new SceneCamera();
         turns.Update(session, camera, 0);
+        var focus = camera.Focus;
+        check(focus == SceneCamera.World(session.VisualPosition) + System.Numerics.Vector3.UnitY * 4,
+            "Default camera focuses the ball center at the beginning of a turn");
+        camera.Fit(session.Course, 936, 620);
+        var screenCenter = Raylib.GetWorldToScreenEx(focus!.Value, camera.Value, 936, 620);
+        check(System.Numerics.Vector2.Distance(screenCenter, new(468, 310)) < .01f,
+            "Ball focus projects to viewport center");
+        check(!camera.Options.AllowTopDown && !camera.Options.AllowManualRotation,
+            "Default options disable top-down and manual camera rotation");
+        var alternative = new SceneCamera { Options = new CameraOptions { CenterOnBallAtTurnStart = false, AutoRotateBetweenShots = false } };
+        new TurnPresentation(new Random(19)).Update(session, alternative, 0);
+        check(alternative.Focus is null && !alternative.IsTurning, "Camera options can disable ball focus and automatic turns");
         check(camera.IsTurning && session.Shot is null && session.Strokes == 0, "Initial camera preparation does not create a stroke");
         turns.Update(session, camera, 10); var settled = camera.Yaw;
         turns.Update(session, camera, 10);
         check(!camera.IsTurning && camera.Yaw == settled, "Ready state starts only one rotation, never one per render frame");
         session.Shoot(new(1, 0, 0)); var shot = session.Shot;
         turns.Update(session, camera, .01);
+        check(camera.Focus == focus, "Camera keeps its turn-start focus during the shot");
         check(!camera.IsTurning && camera.Yaw == settled, "Camera does not turn while ball is in motion");
         session.Advance(10); var state = session.Ball;
         turns.Update(session, camera, 0);

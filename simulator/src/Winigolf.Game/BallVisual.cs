@@ -19,11 +19,14 @@ internal sealed class BallVisual
 
     public void Reset() { previous = null; rotation = Quaternion.Identity; }
 
-    public void Draw(GameSession session, Vector3 target)
+    public void Draw(GameSession session, Vector3 target, Color tint)
     {
-        var p = SceneCamera.World(session.VisualPosition);
-        var progress = (float)session.CaptureProgress;
-        if (previous is { } old && progress == 0)
+        var captured = session.Outcome == Winigolf.Physics.EndReason.Captured;
+        var center = captured
+            ? CaptureMotion.Sample(session.Course, session.Ball, session.Time - session.Shot!.Steps * Winigolf.Physics.Simulator.StepSeconds)
+            : SceneCamera.World(session.VisualPosition) + Vector3.UnitY * Radius;
+        var p = center - Vector3.UnitY * Radius;
+        if (previous is { } old)
         {
             var delta = p - old;
             if (delta.LengthSquared() > .000001f)
@@ -34,12 +37,9 @@ internal sealed class BallVisual
             }
         }
         previous = p;
-        // Settle above the opening, then fall at increasing speed. Radius stays constant.
-        var fall = Math.Clamp((progress - .35f) / .65f, 0, 1);
-        var center = p + Vector3.UnitY * (Radius - 10 * fall * fall);
-        if (fall == 0)
+        if (!captured)
             DrawCylinderEx(p + Vector3.UnitY * .12f, p + Vector3.UnitY * .2f, 5.5f, 5.5f, 24, new Color(30, 64, 50, 255));
-        if (progress >= 1) return;
+        if (captured && center.Y + Radius < target.Y + .36f) return;
         const int rings = 24, slices = 48;
         Vector3 Normal(int ring, int slice)
         {
@@ -54,9 +54,10 @@ internal sealed class BallVisual
             var worldNormal = Vector3.Transform(normal, rotation);
             var light = .65f + .35f * MathF.Max(0, Vector3.Dot(worldNormal, Vector3.Normalize(new Vector3(-1, 2, 1))));
             var shade = dark ? 32 : (int)(248 * light);
-            var color = new Color(shade, shade, dark ? shade : (int)(235 * light), 255);
+            var color = dark ? new Color(shade, shade, shade, 255)
+                : new Color((int)(tint.R * light), (int)(tint.G * light), (int)(tint.B * light), 255);
             var vertices = new List<Vector3> { center + Radius * Vector3.Transform(a, rotation), center + Radius * Vector3.Transform(b, rotation), center + Radius * Vector3.Transform(c, rotation) };
-            if (fall > 0)
+            if (captured)
             {
                 // Clip at the mouth: the green hides the portion below its surface.
                 var clipped = new List<Vector3>();

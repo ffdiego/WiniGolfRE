@@ -20,7 +20,13 @@ dotnet run --project simulator/src/Winigolf.Game
 
 `Winigolf.sln` reúne o núcleo físico, o console, o laboratório visual, o cliente raylib e a ferramenta `AimAudit`; também pode ser aberto no Visual Studio.
 
-Ou abra `simulator/abrir-jogo.cmd`. Para o laboratório de análise, use `simulator/abrir-laboratorio.cmd`. O restore baixa `Raylib-cs` e `Iced` do NuGet.org nas versões fixadas pelos projetos, portanto o primeiro build desses projetos precisa de rede. Os textos das licenças estão em `simulator/licenses/`.
+O cliente centraliza a câmera na bola antes de cada tacada. Os padrões de câmera (incluindo permissões de vista de cima e giro manual) ficam em [`CameraOptions.cs`](simulator/src/Winigolf.Game/CameraOptions.cs). Veja [comportamento e configuração](docs/24-opcoes-de-camera-e-foco-na-bola.md).
+
+Ao abrir, cadastre de 1 a 6 jogadores para uma partida local com cores, bolas transparentes e placar individual. [Controles e regras da partida](docs/27-partida-local-com-varios-jogadores.md).
+
+A cena ocupa toda a janela, com o placar sobreposto. A [animação de captura](docs/28-cena-na-janela-inteira-e-captura-com-velocidade.md) aproveita a direção e a velocidade da bola sem alterar o resultado físico da tacada.
+
+No Visual Studio, use Winigolf.Game como projeto de inicialização. Para o laboratório, use Winigolf.Viewer. O restore baixa `Raylib-cs` e `Iced` do NuGet.org nas versões fixadas pelos projetos, portanto o primeiro build desses projetos precisa de rede. Os textos das licenças estão em `simulator/licenses/`.
 
 As capturas e relatórios em `artifacts/` documentam resultados históricos. Para gerar novos resultados, passe um caminho de saída sob `artifacts/`; os diretórios `bin/`, `obj/` e `.cache/` são locais e ignorados pelo Git.
 
