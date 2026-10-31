@@ -11,7 +11,7 @@ internal sealed partial class GameApp
     public void ConfigurePlayers(IEnumerable<string> names)
     {
         var courses = Session.Courses; var index = Session.Index; var policy = Session.Policy;
-        Match = new LocalMatch(courses, names);
+        Match = new LocalMatch(courses, names, config);
         Match.SetPolicy(policy); setup = false; Select(index);
         if (!Camera.Options.AllowTopDown) Camera.TopDown = false;
     }

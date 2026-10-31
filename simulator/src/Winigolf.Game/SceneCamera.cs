@@ -134,6 +134,20 @@ internal sealed class SceneCamera
         return new P3(-worldPull.X * gain, -worldPull.Y * gain, 0);
     }
 
+    // Convert the network's camera-relative angle and integer strength to the same
+    // world pull that a local left-button drag would produce (2.5 units per percent).
+    public Vector2 DragForAim(int angleDegrees, int strengthPercent, P3 ball)
+    {
+        if (angleDegrees is < 0 or > 359) throw new ArgumentOutOfRangeException(nameof(angleDegrees));
+        if (strengthPercent is < 1 or > 100) throw new ArgumentOutOfRangeException(nameof(strengthPercent));
+        var length = strengthPercent * 2.5;
+        var radians = Yaw + Math.PI + angleDegrees * Math.PI / 180;
+        var pullX = (float)(Math.Cos(radians) * length);
+        var pullY = (float)(Math.Sin(radians) * length);
+        var basis = Basis(ball);
+        return basis.X * pullX + basis.Y * pullY;
+    }
+
     public float DragLimit(P3 ball, ShotMode mode) => Basis(ball).Scale * (mode == ShotMode.Mode1 ? 250 : 50);
 
     private (Vector2 X, Vector2 Y, float Determinant, float Scale) Basis(P3 ball)

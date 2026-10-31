@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="theme-color" content="#0e1922">
+  <title>WiniGolf · controle</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, Segoe UI, sans-serif; background: #0e1922; color: #eef4ed; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-height: 100svh; display: grid; place-items: center; padding: 18px; }
+    main { width: min(100%, 460px); display: grid; gap: 16px; }
+    h1 { margin: 0; font-size: 30px; font-weight: 850; letter-spacing: -.04em; }
+    .muted { color: #96adb5; }
+    .card { border: 1px solid #29404a; border-radius: 20px; background: #182933; padding: 18px; }
+    input, button { width: 100%; min-height: 52px; border: 0; border-radius: 13px; font: inherit; font-size: 18px; }
+    input { color: #eef4ed; background: #0e1922; padding: 0 15px; outline: 1px solid #38525d; }
+    button { color: #0e1922; background: #8ee5be; font-weight: 850; touch-action: manipulation; }
+    button:disabled { background: #3a4b50; color: #9aabad; }
+    #join, #start { margin-top: 10px; }
+    #status { min-height: 24px; font-weight: 700; }
+    #room { color: #96adb5; font-size: 14px; }
+    #pad { width: min(78vw, 340px); height: min(78vw, 340px); display: block; margin: 8px auto; border-radius: 50%; background: #10212a; touch-action: none; }
+    .readout { display: flex; justify-content: space-between; font-size: 19px; font-weight: 800; }
+    #players { display: grid; gap: 6px; }
+    .player { display: flex; align-items: center; gap: 9px; color: #d8e2df; }
+    .dot { width: 12px; height: 12px; border-radius: 50%; }
+    #aim, #lobby, #playing { display: none; }
+    .hint { text-align: center; font-size: 14px; }
+  </style>
+</head>
+<body>
+<main>
+  <header><h1>wini<span style="color:#8ee5be">golf</span></h1><div class="muted">Controle da partida na tela grande</div></header>
+  <section class="card" id="connect">
+    <div id="status">Conectando à sala…</div>
+    <input id="name" maxlength="18" placeholder="Seu nome" autocomplete="nickname">
+    <button id="join" disabled>Entrar na sala</button>
+    <div id="room"></div>
+  </section>
+  <section class="card" id="lobby">
+    <strong>Aguardando partida</strong>
+    <div id="players" style="margin:12px 0"></div>
+    <button id="start">Começar partida</button>
+  </section>
+  <section class="card" id="playing">
+    <div id="turn" class="muted"></div>
+    <div id="aim">
+      <canvas id="pad" width="400" height="400"></canvas>
+      <div class="readout"><span id="angle">000°</span><span id="force">00%</span></div>
+      <button id="confirm" disabled style="margin-top:14px">Confirmar tacada</button>
+      <p class="hint muted">Arraste na direção em que puxa a corda. Confirme para bater.</p>
+    </div>
+    <div id="waiting" class="hint muted">Aguarde sua vez; acompanhe a TV.</div>
+  </section>
+</main>
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const ws = new WebSocket(`${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/ws`);
+  let me = null, state = null, lobbyPlayers = [], aiming = false, angle = 0, strength = 1, lastPreview = 0;
+  const canvas = $('pad'), ctx = canvas.getContext('2d');
+  ws.onopen = () => { $('status').textContent = 'Conectado à sala'; $('join').disabled = false; $('room').textContent = location.host; };
+  ws.onclose = () => { $('status').textContent = 'Conexão encerrada. Atualize a página para tentar novamente.'; $('join').disabled = true; };
+  ws.onerror = () => { $('status').textContent = 'Não foi possível conectar à sala.'; };
+  ws.onmessage = event => {
+    const m = JSON.parse(event.data);
+    if (m.type === 'joined') { me = m.playerId; $('connect').style.display = 'none'; $('lobby').style.display = 'block'; }
+    if (m.type === 'lobby') { lobbyPlayers = m.players || []; drawLobby(); }
+    if (m.type === 'starting') { $('lobby').style.display = 'none'; $('playing').style.display = 'block'; }
+    if (m.type === 'state') { state = m.state; $('lobby').style.display = 'none'; $('playing').style.display = 'block'; drawState(); }
+    if (m.type === 'aim' && m.playerId === state?.activePlayerId) $('turn').textContent = `Mira de ${nameOf(m.playerId)} · ${m.angleDegrees}° · ${m.strengthPercent}%`;
+    if (m.type === 'shotResult') $('turn').textContent = `Tacada concluída: ${m.steps} passos · ${m.outcome}`;
+    if (m.type === 'shotRejected') { aiming = false; $('turn').textContent = `Tacada não enviada: ${m.reason}`; drawState(); }
+    if (m.type === 'error') $('status').textContent = m.message;
+  };
+  $('join').onclick = () => ws.send(JSON.stringify({ type: 'join', name: $('name').value.trim() }));
+  $('start').onclick = () => ws.send(JSON.stringify({ type: 'start' }));
+  function nameOf(id) { return state?.players.find(p => p.id === id)?.name || 'jogador'; }
+  function drawLobby() {
+    $('players').innerHTML = lobbyPlayers.map(p => `<div class="player"><i class="dot" style="background:${safeColor(p.color)}"></i>${escapeHtml(p.name)}</div>`).join('');
+  }
+  function safeColor(c) { return /^#[0-9a-f]{6}$/i.test(c) ? c : '#8ee5be'; }
+  function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+  function drawState() {
+    const active = state.activePlayerId === me;
+    $('turn').textContent = state.canShoot && active ? `Sua vez · Campo ${state.courseId} · ângulo relativo à câmera` : `Vez de ${nameOf(state.activePlayerId)} · ${state.courseName}`;
+    $('aim').style.display = active && state.canShoot ? 'block' : 'none';
+    $('waiting').style.display = active && state.canShoot ? 'none' : 'block';
+    $('confirm').disabled = !active || !state.canShoot || !aiming;
+    drawPad();
+  }
+  function sendPreview() {
+    if (!state || !state.canShoot || state.activePlayerId !== me || !aiming) return;
+    const now = performance.now(); if (now - lastPreview < 50) return; lastPreview = now;
+    ws.send(JSON.stringify({ type: 'aim', revision: state.revision, angleDegrees: angle, strengthPercent: strength }));
+  }
+  function drawPad() {
+    const w = canvas.width, c = w / 2, max = 145, r = Math.max(12, max * strength / 100);
+    ctx.clearRect(0, 0, w, w); ctx.strokeStyle = '#38525d'; ctx.lineWidth = 3; ctx.beginPath(); ctx.arc(c,c,max,0,Math.PI*2); ctx.stroke();
+    ctx.fillStyle = '#8ee5be'; ctx.globalAlpha = .35; ctx.beginPath(); ctx.arc(c,c,13,0,Math.PI*2); ctx.fill(); ctx.globalAlpha = 1;
+    const radians = (180 + angle) * Math.PI / 180, px = c + Math.cos(radians) * r, py = c - Math.sin(radians) * r;
+    ctx.strokeStyle = '#8ee5be'; ctx.lineWidth = 8; ctx.lineCap = 'round'; ctx.beginPath(); ctx.moveTo(c,c); ctx.lineTo(px,py); ctx.stroke();
+    ctx.fillStyle = '#eef4ed'; ctx.beginPath(); ctx.arc(px,py,13,0,Math.PI*2); ctx.fill();
+    $('angle').textContent = `${String(angle).padStart(3,'0')}°`; $('force').textContent = `${String(strength).padStart(2,'0')}%`;
+  }
+  function updateAim(e) {
+    const rect = canvas.getBoundingClientRect(), scale = canvas.width / rect.width;
+    let dx = (e.clientX - rect.left - rect.width/2) * scale, dy = (e.clientY - rect.top - rect.height/2) * scale;
+    const max = 145, length = Math.hypot(dx,dy); if (length > max) { dx *= max/length; dy *= max/length; }
+    if (Math.hypot(dx,dy) < 4) { aiming = false; strength = 1; $('confirm').disabled = true; drawPad(); return; }
+    aiming = true; strength = Math.max(1, Math.min(100, Math.round(Math.hypot(dx,dy)/max*100)));
+    angle = Math.round((((Math.atan2(-dy,dx) * 180 / Math.PI) - 180) % 360 + 360) % 360);
+    $('confirm').disabled = false; drawPad(); sendPreview();
+  }
+  canvas.onpointerdown = e => { if (!state?.canShoot || state.activePlayerId !== me) return; canvas.setPointerCapture(e.pointerId); updateAim(e); };
+  canvas.onpointermove = e => { if (canvas.hasPointerCapture(e.pointerId)) updateAim(e); };
+  canvas.onpointerup = e => { if (canvas.hasPointerCapture(e.pointerId)) { updateAim(e); canvas.releasePointerCapture(e.pointerId); } };
+  $('confirm').onclick = () => {
+    if (!state?.canShoot || state.activePlayerId !== me || !aiming) return;
+    const shotId = globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    ws.send(JSON.stringify({ type: 'shot', shotId, revision: state.revision, angleDegrees: angle, strengthPercent: strength }));
+    aiming = false; $('confirm').disabled = true;
+  };
+  drawPad();
+})();
+</script>
+</body>
+</html>

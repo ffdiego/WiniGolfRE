@@ -32,9 +32,28 @@ internal sealed partial class GameApp : IDisposable
     private readonly Color muted = new(146, 173, 181, 255);
     private readonly Color mint = new(142, 229, 190, 255);
     private readonly Color white = new(238, 244, 237, 255);
+    private readonly OnlineHost? onlineHost;
+    private readonly GameConfig config;
+    private readonly List<string> onlinePlayerIds = [];
+    private OnlineAim? remoteAim;
+    private bool onlineStarted;
+    private bool onlineSnapshotInitialized;
+    private int onlineRevision;
+    private int publishedActiveIndex = -1;
+    private ShotResult? publishedShot;
+    private bool publishedAtEnd;
+    private bool publishedReady;
+    private double courseAdvanceElapsed;
+    private bool courseAdvanceTimerStarted;
+    private double CurrentCourseAdvanceDelay => Session.Outcome == EndReason.Captured
+        ? config.DelayAfterCapture(Session.Strokes, Session.Course.Par)
+        : config.CourseAdvanceDelaySeconds;
 
-    public GameApp(Course[] courses, bool hidden, CameraOptions? cameraOptions = null)
+    public GameApp(Course[] courses, bool hidden, CameraOptions? cameraOptions = null, OnlineHost? onlineHost = null,
+        GameConfig? config = null)
     {
+        this.onlineHost = onlineHost;
+        this.config = config ?? new GameConfig(); this.config.Validate();
         Camera = new SceneCamera { Yaw = -.35f, Options = cameraOptions ?? new CameraOptions(),
             RightOverlayWidth = 310, TopOverlayHeight = 128, BottomOverlayHeight = 90 };
         SetTraceLogLevel(TraceLogLevel.Warning);
@@ -45,8 +64,8 @@ internal sealed partial class GameApp : IDisposable
         // Coordinates retain the original game's units; some fields exceed the default far plane.
         Rlgl.SetClipPlanes(1, 20000);
         SetWindowMinSize(1024, 720); SetExitKey(KeyboardKey.Null); SetTargetFPS(hidden ? 0 : 120);
-        Match = new LocalMatch(courses, ["Jogador 1"]);
-        setup = !hidden;
+        Match = new LocalMatch(courses, ["Jogador 1"], this.config);
+        setup = !hidden && onlineHost is null;
         Audio = new GameAudio(silent: hidden);
         var fontFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Fonts), "segoeuib.ttf");
         if (File.Exists(fontFile))
@@ -62,6 +81,7 @@ internal sealed partial class GameApp : IDisposable
 
     public void Select(int index)
     {
+        courseAdvanceElapsed = 0; courseAdvanceTimerStarted = false;
         CancelAim(); Match.Select(index); Scene.Build(Session.Course); Camera.Zoom = 1; picker = false;
         turns.Reset(Camera);
         Camera.Focus = Camera.Options.CenterOnBallAtTurnStart ? SceneCamera.World(Session.VisualPosition) + System.Numerics.Vector3.UnitY * 4 : null;
@@ -117,6 +137,7 @@ internal sealed partial class GameApp : IDisposable
     private void Input(double dt)
     {
         if (IsWindowResized()) Resize();
+        if (onlineHost is not null) { Camera.Fit(Session.Course, (int)viewport.Width, (int)viewport.Height); return; }
         if (setup) { SetupInput(); return; }
         if (!IsWindowFocused()) CancelAim();
         if (IsKeyPressed(KeyboardKey.Escape)) { CancelAim(); picker = false; }
@@ -132,7 +153,6 @@ internal sealed partial class GameApp : IDisposable
             CancelAim(); Match.SetPolicy(Session.Policy == CollisionPolicy.SurfaceTraversal
                 ? CollisionPolicy.ReferenceOrder : CollisionPolicy.SurfaceTraversal);
         }
-        if (IsKeyPressed(KeyboardKey.Enter) && Match.CourseCompleted) Select(Session.Index + 1);
         if (Camera.Options.AllowManualRotation && !Camera.TopDown && !Camera.IsTurning && (IsKeyDown(KeyboardKey.Q) || IsKeyDown(KeyboardKey.E)))
         {
             CancelAim(); Camera.Yaw += (IsKeyDown(KeyboardKey.Q) ? -1 : 1) * (float)dt;
@@ -160,16 +180,121 @@ internal sealed partial class GameApp : IDisposable
         while (!WindowShouldClose())
         {
             var dt = (double)GetFrameTime();
+            if (onlineHost is not null) ProcessOnlineCommands();
             Input(dt);
             if (!setup)
             {
                 var active = Match.ActiveIndex; Match.Advance(dt);
                 if (active != Match.ActiveIndex) { CancelAim(); turns.Reset(Camera); }
                 AdvancePresentation(dt); Audio.Update(Session);
+                AdvanceCourseTransition(dt);
+                if (onlineStarted) UpdateOnlineSnapshot();
             }
-            Draw();
+            Draw(acceptUi: onlineHost is null);
         }
     }
+
+    private void AdvanceCourseTransition(double elapsed)
+    {
+        if (!Match.CourseCompleted)
+        {
+            courseAdvanceElapsed = 0; courseAdvanceTimerStarted = false;
+            return;
+        }
+        if (Session.Paused || !Session.AtEnd) return;
+
+        // The final player's capture delay is the same one used between players,
+        // including the longer below-par applause. Non-capture completion uses its own delay.
+        var delay = Session.Outcome == EndReason.Captured
+            ? config.DelayAfterCapture(Session.Strokes, Session.Course.Par)
+            : config.CourseAdvanceDelaySeconds;
+        if (!courseAdvanceTimerStarted) courseAdvanceTimerStarted = true;
+        else courseAdvanceElapsed += elapsed;
+        if (courseAdvanceElapsed < delay) return;
+
+        var nextCourse = Session.Index + 1;
+        Select(nextCourse);
+        AdvancePresentation(0);
+    }
+
+    private void ProcessOnlineCommands()
+    {
+        if (onlineHost is null) return;
+        while (onlineHost.TryDequeue(out var command))
+        {
+            switch (command)
+            {
+                case OnlineStart start when !onlineStarted:
+                    ConfigurePlayers(start.Players.Select(p => p.Name));
+                    onlinePlayerIds.Clear(); onlinePlayerIds.AddRange(start.Players.Select(p => p.Id));
+                    onlineStarted = true; onlineRevision = 0; onlineSnapshotInitialized = false;
+                    remoteAim = null; turns.Reset(Camera); AdvancePresentation(0);
+                    UpdateOnlineSnapshot(force: true);
+                    break;
+                case OnlineAim aim when onlineStarted && Match.ActiveIndex < onlinePlayerIds.Count && onlinePlayerIds[Match.ActiveIndex] == aim.PlayerId:
+                    remoteAim = aim;
+                    break;
+                case OnlineShot shot:
+                    ProcessOnlineShot(shot);
+                    break;
+            }
+        }
+    }
+
+    private void ProcessOnlineShot(OnlineShot shot)
+    {
+        if (onlineHost is null || !onlineStarted || shot.Revision != onlineRevision ||
+            Match.ActiveIndex >= onlinePlayerIds.Count || onlinePlayerIds[Match.ActiveIndex] != shot.PlayerId ||
+            !Session.CanShoot || Camera.IsTurning)
+        {
+            onlineHost?.RejectShot(shot.PlayerId, shot.ShotId, "It is not your turn or the game is not ready.");
+            return;
+        }
+        try
+        {
+            var drag = Camera.DragForAim(shot.AngleDegrees, shot.StrengthPercent, Session.Ball.Position);
+            var impulse = Camera.Impulse(drag, Session.Ball.Position, ShotMode.Mode1);
+            if (impulse.X == 0 && impulse.Y == 0) throw new InvalidOperationException("The shot input produced no impulse.");
+            Session.Shoot(impulse); Audio.Update(Session); remoteAim = null;
+            var result = Session.Shot!;
+            onlineHost.ConfirmShot(shot.PlayerId, shot.ShotId, shot.AngleDegrees, shot.StrengthPercent,
+                result.Steps, result.Reason.ToString(), result.FinalState.Position.X, result.FinalState.Position.Y,
+                result.FinalState.Position.Z, result.FinalState.SurfaceId, result.StrokeCount, result.Penalty);
+            UpdateOnlineSnapshot(force: true);
+        }
+        catch (Exception ex) when (ex is ArgumentException or InvalidOperationException)
+        {
+            onlineHost.RejectShot(shot.PlayerId, shot.ShotId, ex.Message);
+        }
+    }
+
+    private void UpdateOnlineSnapshot(bool force = false)
+    {
+        if (onlineHost is null || !onlineStarted || onlinePlayerIds.Count != Match.Players.Count) return;
+        var active = Match.ActiveIndex;
+        var shot = Session.Shot;
+        var atEnd = Session.AtEnd;
+        var ready = Session.CanShoot && !Camera.IsTurning && !Match.WaitingToPass;
+        if (!force && onlineSnapshotInitialized && active == publishedActiveIndex &&
+            ReferenceEquals(shot, publishedShot) && atEnd == publishedAtEnd && ready == publishedReady) return;
+        onlineRevision++;
+        var players = Match.Players.Select((p, i) =>
+        {
+            var ball = p.Session.Ball;
+            return new OnlinePlayerState(onlinePlayerIds[i], p.Name, onlineHostColor(i), ball.Position.X, ball.Position.Y,
+                ball.Position.Z, ball.SurfaceId, p.Session.Strokes, p.Total, p.Session.Completed);
+        }).ToArray();
+        onlineHost.PublishSnapshot(new OnlineMatchSnapshot(onlineRevision, Session.Course.Id, Session.Course.Name,
+            Session.Course.DataHash, Simulator.VersionFor(Session.Policy), active, onlinePlayerIds[active], ready,
+            Camera.Yaw * 180 / Math.PI, players));
+        onlineSnapshotInitialized = true; publishedActiveIndex = active; publishedShot = shot;
+        publishedAtEnd = atEnd; publishedReady = ready;
+    }
+
+    private static string onlineHostColor(int seat) => seat switch
+    {
+        0 => "#F5D362", 1 => "#70C0FF", 2 => "#F98B97", 3 => "#A4E19A", 4 => "#C39FF6", _ => "#FFAD6C"
+    };
 
     public void AdvancePresentation(double elapsed)
     {
@@ -219,6 +344,16 @@ internal sealed partial class GameApp : IDisposable
             var force = Math.Clamp((int)Math.Round(delta.Length() / limit * 100, MidpointRounding.AwayFromZero), 0, 100);
             Text($"ÂNGULO {angle:000}°   ·   FORÇA {force:00}%", 28, GetScreenHeight() - 101, 20, color);
         }
+        if (onlineStarted && remoteAim is { } remote && Match.ActiveIndex < onlinePlayerIds.Count &&
+            remote.PlayerId == onlinePlayerIds[Match.ActiveIndex])
+        {
+            var ball = Camera.ProjectBallCenter(Session.VisualPosition) + new Vector2(viewport.X, viewport.Y);
+            var pull = Camera.DragForAim(remote.AngleDegrees, remote.StrengthPercent, Session.Ball.Position);
+            var color = Match.Active.Color;
+            DrawLineEx(ball, ball + pull, 2.5f, color); DrawCircleV(ball + pull, 5, color);
+            Text($"MIRA {remote.AngleDegrees:000}°  ·  FORÇA {remote.StrengthPercent:00}%", 28,
+                GetScreenHeight() - 101, 20, color);
+        }
 
         var sideX = GetScreenWidth() - 294;
         Box(new Rectangle(sideX, 86, 270, 260 + Match.Players.Count * 36), new Color(24, 41, 51, 225));
@@ -234,12 +369,35 @@ internal sealed partial class GameApp : IDisposable
             _ => Session.CanShoot ? Camera.IsTurning ? "PREPARANDO A TACADA…" : "ESCOLHA A DIREÇÃO." : "REINICIE O CAMPO PARA CONTINUAR."
         };
         if (Match.WaitingToPass) message = "PASSANDO A VEZ…";
-        if (Match.CourseCompleted) message = "PISTA CONCLUÍDA!   ENTER: PRÓXIMA PISTA";
+        if (Match.CourseCompleted)
+        {
+            message = courseAdvanceTimerStarted
+                ? $"PRÓXIMA PISTA EM {Math.Max(0, CurrentCourseAdvanceDelay - courseAdvanceElapsed):0.0} s"
+                : Session.Outcome == EndReason.Captured ? "AGUARDE A BOLA AFUNDAR…" : "PISTA CONCLUÍDA!";
+        }
         Text(message, 28, GetScreenHeight() - 66, 21, Session.Completed ? mint : white);
-        Text("Puxe no sentido oposto à tacada  ·  Esc cancela  ·  Espaço pausa", 28, GetScreenHeight() - 32, 18, muted);
+        Text(onlineHost is null ? "Puxe no sentido oposto à tacada  ·  Esc cancela  ·  Espaço pausa" :
+            "Mire e confirme pelo celular  ·  a tela grande mostra a tacada", 28, GetScreenHeight() - 32, 18, muted);
         if (picker) DrawPicker(acceptUi);
         if (setup) DrawSetup(acceptUi);
+        if (onlineHost is not null) DrawOnlineOverlay();
         EndDrawing();
+    }
+
+    private void DrawOnlineOverlay()
+    {
+        if (onlineStarted || onlineHost is null) return;
+        var width = Math.Min(760, GetScreenWidth() - 48);
+        var left = (GetScreenWidth() - width) / 2f; var top = (GetScreenHeight() - 280) / 2f;
+        DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), new Color(5, 12, 19, 218));
+        Box(new Rectangle(left, top, width, 280), panel, .05f);
+        Text("SALA ONLINE", left + 28, top + 24, 34, white);
+        Text("Entre pelo celular usando o endereço abaixo:", left + 28, top + 78, 20, muted);
+        Text(onlineHost.JoinUrl, left + 28, top + 112, 24, mint);
+        Text($"JOGADORES  {onlineHost.ConnectedCount} / 6", left + 28, top + 160, 19, white);
+        var names = onlineHost.LobbyNames;
+        Text(names.Length == 0 ? "Aguardando jogadores…" : string.Join("  ·  ", names), left + 28, top + 192, 19, muted);
+        Text("Quando todos entrarem, toque em Começar partida no celular.", left + 28, top + 234, 18, white);
     }
 
     private void DrawPicker(bool acceptUi)

@@ -22,6 +22,8 @@ As atualizações da apresentação incluem [bola com giro e queda](22-bola-com-
 
 O cliente oferece [partidas locais de 1 a 6 jogadores](27-partida-local-com-varios-jogadores.md), com cadastro de nomes, cores, bolas transparentes e placar individual.
 
+O [multiplayer presencial com celulares e tela grande](29-plano-multiplayer-celulares.md) tem um primeiro protótipo host/WebSocket integrado à janela Raylib; o ângulo da tacada é relativo à câmera. A validação em dois dispositivos ainda está pendente.
+
 A [cena ocupa a janela inteira](28-cena-na-janela-inteira-e-captura-com-velocidade.md), com interface sobreposta e uma animação de entrada no buraco que usa a velocidade de chegada, gravidade e contato amortecido com a borda.
 
 - [Dados dos 36 campos](dados/campos/) e [resumo](dados/campos-resumo.json).
