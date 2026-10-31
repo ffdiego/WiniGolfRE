@@ -88,11 +88,11 @@ internal sealed partial class GameApp : IDisposable
     public bool StartAim(Vector2 point, MouseButton button)
     {
         if (setup || Match.WaitingToPass || !Session.CanShoot || Camera.IsTurning || aiming || button is not (MouseButton.Left or MouseButton.Right)) return false;
-        var projected = Camera.Project(Session.VisualPosition);
+        var projected = Camera.ProjectBallCenter(Session.VisualPosition);
         if (Vector2.DistanceSquared(point, projected) > 22 * 22) return false;
         aimButton = button; aimMode = button == MouseButton.Left ? ShotMode.Mode1 : ShotMode.Mode2;
         Camera.Zoom = Camera.Zoom; // Freeze scale while dragging the shot.
-        anchor = endpoint = point; aiming = true; return true;
+        anchor = endpoint = projected; aiming = true; return true;
     }
 
     public bool FinishAim(Vector2 point, MouseButton button)
@@ -206,14 +206,18 @@ internal sealed partial class GameApp : IDisposable
         if (Button("Todas as pistas  [Tab]", new Rectangle(GetScreenWidth() - 294, 24, 270, 42)) && acceptUi) { CancelAim(); picker = true; }
         if (aiming)
         {
-            var ball = Camera.Project(Session.VisualPosition) + new Vector2(viewport.X, viewport.Y);
+            var ball = Camera.ProjectBallCenter(Session.VisualPosition) + new Vector2(viewport.X, viewport.Y);
             var delta = endpoint - anchor;
             var limit = Camera.DragLimit(Session.Ball.Position, aimMode);
             var pull = delta.Length() > limit ? Vector2.Normalize(delta) * limit : delta;
-            var color = new Color(250, 195, 113, 255);
+            var color = Match.Active.Color;
             DrawLineEx(ball, ball + pull, aimMode == ShotMode.Mode1 ? 1.5f : 4, color);
             DrawCircleV(ball + pull, 4, color);
-            Text($"{(aimMode == ShotMode.Mode1 ? "PRECISÃO" : "FORTE")}   ·   PUXADA {Math.Min(100, delta.Length() / limit * 100):0}%", 28, GetScreenHeight() - 101, 20, color);
+            var direction = Camera.Impulse(delta, Session.Ball.Position, aimMode);
+            var angle = (int)Math.Round((Math.Atan2(direction.Y, direction.X) * 180 / Math.PI + 180 + 360) % 360,
+                MidpointRounding.AwayFromZero) % 360;
+            var force = Math.Clamp((int)Math.Round(delta.Length() / limit * 100, MidpointRounding.AwayFromZero), 0, 100);
+            Text($"ÂNGULO {angle:000}°   ·   FORÇA {force:00}%", 28, GetScreenHeight() - 101, 20, color);
         }
 
         var sideX = GetScreenWidth() - 294;

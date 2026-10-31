@@ -92,6 +92,7 @@ internal sealed class SceneCamera
     }
 
     public Vector2 Project(P3 p) => Raylib.GetWorldToScreenEx(World(p), Value, Width, Height);
+    public Vector2 ProjectBallCenter(P3 position) => Project(position with { Z = position.Z + CaptureMotion.BallRadius });
 
     public void FollowBall(P3 position, double elapsed)
     {
