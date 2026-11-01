@@ -410,7 +410,13 @@ internal sealed partial class GameApp : IDisposable
     private void DrawGhostNameLabels()
     {
         var placed = new List<Rectangle>();
-        var ghostPlayers = Match.Players.Where(p => !ReferenceEquals(p.Session, Session) && p.Session.Outcome != EndReason.Captured)
+        var protectedAreas = Match.Players
+            .Where(p => p.Session.Outcome != EndReason.Captured)
+            .Select(p => ScreenCircle(Camera.ProjectBallCenter(p.Session.VisualPosition), CaptureMotion.BallRadius, 5))
+            .Append(ScreenCircle(Camera.Project(Session.Course.Target), 12, 5))
+            .ToArray();
+        var ghostPlayers = Match.Players.Where(p => !ReferenceEquals(p.Session, Session) &&
+                p.Session.Outcome != EndReason.Captured && p.Session.Strokes > 0)
             .OrderByDescending(p => System.Numerics.Vector3.DistanceSquared(
                 SceneCamera.World(p.Session.VisualPosition), Camera.Value.Position));
         foreach (var player in ghostPlayers)
@@ -423,13 +429,19 @@ internal sealed partial class GameApp : IDisposable
             var x = Math.Clamp(point.X - width / 2, 8, GetScreenWidth() - width - 8);
             var baseY = point.Y - 32;
             var color = player.Color; color.A = 225;
-            for (var attempt = 0; attempt < 5; attempt++)
+            var stackStep = height + 3;
+            var maxRows = Math.Max(1, (int)(GetScreenHeight() / stackStep));
+            for (var attempt = 0; attempt < maxRows; attempt++)
             {
-                var rect = new Rectangle(x, baseY - attempt * (height + 3), width, height);
+                // Keep the first label above its ball. When labels collide, stack the next
+                // one below; search above as a fallback near the bottom UI or screen edge.
+                var row = attempt == 0 ? 0 : (attempt % 2 == 1 ? (attempt + 1) / 2 : -(attempt / 2));
+                var rect = new Rectangle(x, baseY + row * stackStep, width, height);
                 if (rect.Y < 4 || rect.Y + rect.Height > GetScreenHeight() - 4 ||
                     Overlaps(rect, new Rectangle(16, 12, 410, 116)) ||
                     Overlaps(rect, new Rectangle(GetScreenWidth() - 294, 86, 270, 260 + Match.Players.Count * 36)) ||
                     Overlaps(rect, new Rectangle(16, GetScreenHeight() - 82, Math.Min(850, GetScreenWidth() - 32), 72)) ||
+                    protectedAreas.Any(area => Overlaps(rect, area)) ||
                     placed.Any(other => Overlaps(rect, other))) continue;
                 var plate = new Color(9, 17, 22, 175);
                 Box(rect, plate, .18f);
@@ -439,6 +451,12 @@ internal sealed partial class GameApp : IDisposable
                 break;
             }
         }
+    }
+
+    private Rectangle ScreenCircle(Vector2 center, float worldRadius, float padding)
+    {
+        var radius = worldRadius * GetScreenHeight() / Math.Max(1, Camera.Value.FovY) + padding;
+        return new Rectangle(center.X - radius, center.Y - radius, radius * 2, radius * 2);
     }
 
     private static bool Overlaps(Rectangle a, Rectangle b) =>
