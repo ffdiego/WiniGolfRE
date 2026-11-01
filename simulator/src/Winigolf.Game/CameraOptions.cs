@@ -8,7 +8,6 @@ internal sealed record CameraOptions
     public bool AllowManualRotation { get; init; } = false;
     public bool AutoRotateBetweenShots { get; init; } = true;
     public bool KeepBallInFrame { get; init; } = true;
-    public bool DynamicBallAndHoleFraming { get; init; }
     public float EdgeMargin { get; init; } = .15f;
     public float FollowSpeed { get; init; } = 8;
     public float DynamicPanSpeed { get; init; } = 5;

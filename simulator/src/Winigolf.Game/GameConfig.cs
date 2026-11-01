@@ -4,6 +4,7 @@ namespace Winigolf.Game;
 public sealed record GameConfig
 {
     public bool OnlineMode { get; init; } = true;
+    public bool DynamicBallAndHoleFraming { get; init; } = true;
     public int Port { get; init; } = 9000;
     public double CourseAdvanceDelaySeconds { get; init; } = 2;
     public double CaptureDelaySeconds { get; init; } = 2;

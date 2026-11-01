@@ -59,8 +59,8 @@ internal sealed partial class GameApp : IDisposable
     {
         this.onlineHost = onlineHost;
         this.config = config ?? new GameConfig(); this.config.Validate();
-        var selectedCameraOptions = cameraOptions ?? new CameraOptions { DynamicBallAndHoleFraming = onlineHost is not null };
-        Camera = selectedCameraOptions.DynamicBallAndHoleFraming
+        var selectedCameraOptions = cameraOptions ?? new CameraOptions();
+        Camera = this.config.DynamicBallAndHoleFraming
             ? new DynamicFramingCamera { Yaw = -.35f, Options = selectedCameraOptions,
                 RightOverlayWidth = 310, TopOverlayHeight = 128, BottomOverlayHeight = 90 }
             : new SceneCamera { Yaw = -.35f, Options = selectedCameraOptions,

@@ -12,5 +12,6 @@
     <Content Include="../../assets/icons/winigolf-ball.png" Link="icon/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="wwwroot/**/*" Link="web/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../../../docs/dados/sons-embutidos.json" Link="audio/manifest.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="appsettings.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

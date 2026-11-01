@@ -29,7 +29,7 @@ internal sealed class TurnPresentation(Random random)
                 camera.BeginTurn(random, destination, camera.Options.AutoRotateBetweenShots);
         }
         if (!session.Paused) camera.AdvanceTurn(elapsed);
-        if (!session.Paused && (session.Outcome == EndReason.Moving || camera.Options.DynamicBallAndHoleFraming))
+        if (!session.Paused && (session.Outcome == EndReason.Moving || camera is DynamicFramingCamera))
             camera.TrackFrame(session.VisualPosition, session.Course.Target, elapsed);
     }
 }

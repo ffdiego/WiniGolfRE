@@ -1,4 +1,5 @@
 using Winigolf.Physics;
+using Microsoft.Extensions.Configuration;
 
 namespace Winigolf.Game;
 
@@ -13,7 +14,12 @@ internal static class Program
                 .Select(Course.Load).OrderBy(c => c.Id).ToArray();
             if (courses.Length != 36) throw new InvalidDataException("São necessários os 36 campos extraídos.");
             var check = args.Length > 0 && args[0] == "--self-test";
-            var config = new GameConfig();
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: false)
+                .AddEnvironmentVariables(prefix: "WINIGOLF_")
+                .Build();
+            var config = configuration.GetSection("Game").Get<GameConfig>() ?? new GameConfig();
             config.Validate();
             using var onlineHost = !check && config.OnlineMode ? new OnlineHost(config) : null;
             onlineHost?.Start();
