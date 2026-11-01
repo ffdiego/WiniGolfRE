@@ -35,6 +35,8 @@ internal sealed partial class GameApp : IDisposable
     private readonly OnlineHost? onlineHost;
     private readonly GameConfig config;
     private readonly List<string> onlinePlayerIds = [];
+    private string? onlineQrUrl;
+    private QrCodeSymbol? onlineQr;
     private OnlineAim? remoteAim;
     private bool remoteAimDisplayInitialized;
     private double remoteAimDisplayAngle;
@@ -465,17 +467,60 @@ internal sealed partial class GameApp : IDisposable
     private void DrawOnlineOverlay()
     {
         if (onlineStarted || onlineHost is null) return;
-        var width = Math.Min(760, GetScreenWidth() - 48);
-        var left = (GetScreenWidth() - width) / 2f; var top = (GetScreenHeight() - 280) / 2f;
+        if (onlineQrUrl != onlineHost.JoinUrl)
+        {
+            onlineQrUrl = onlineHost.JoinUrl;
+            onlineQr = QrCode.Encode(onlineQrUrl);
+        }
+        var width = Math.Min(1000, GetScreenWidth() - 48);
+        var height = Math.Min(500, GetScreenHeight() - 48);
+        var left = (GetScreenWidth() - width) / 2f; var top = (GetScreenHeight() - height) / 2f;
         DrawRectangle(0, 0, GetScreenWidth(), GetScreenHeight(), new Color(5, 12, 19, 218));
-        Box(new Rectangle(left, top, width, 280), panel, .05f);
+        Box(new Rectangle(left, top, width, height), panel, .05f);
         Text("SALA ONLINE", left + 28, top + 24, 34, white);
-        Text("Entre pelo celular usando o endereço abaixo:", left + 28, top + 78, 20, muted);
-        Text(onlineHost.JoinUrl, left + 28, top + 112, 24, mint);
-        Text($"JOGADORES  {onlineHost.ConnectedCount} / 6", left + 28, top + 160, 19, white);
+        Text("Escaneie o QR code com o celular para entrar na sala:", left + 28, top + 78, 20, muted);
+        Text("OU ACESSE ESTE ENDEREÇO", left + 28, top + 126, 16, muted);
+        Text(onlineHost.JoinUrl, left + 28, top + 152, 24, mint);
+        Text($"JOGADORES  {onlineHost.ConnectedCount} / 6", left + 28, top + 218, 19, white);
         var names = onlineHost.LobbyNames;
-        Text(names.Length == 0 ? "Aguardando jogadores…" : string.Join("  ·  ", names), left + 28, top + 192, 19, muted);
-        Text("Quando todos entrarem, toque em Começar partida no celular.", left + 28, top + 234, 18, white);
+        if (names.Length == 0) Text("Aguardando jogadores…", left + 28, top + 250, 19, muted);
+        else
+            for (var i = 0; i < names.Length; i++) Text(names[i], left + 28, top + 248 + i * 24, 17, muted);
+        Text("O primeiro jogador a entrar poderá iniciar a partida pelo celular.", left + 28,
+            top + Math.Max(292, 260 + names.Length * 24), 16, white);
+        var qrSize = Math.Min(328, (int)height - 96);
+        var qrBounds = new Rectangle(left + width - qrSize - 26, top + (height - qrSize) / 2, qrSize, qrSize);
+        DrawQrCode(onlineQr!, qrBounds);
+    }
+
+    private static void DrawQrCode(QrCodeSymbol qr, Rectangle bounds)
+    {
+        var tile = new Color(238, 244, 237, 255);
+        var ink = new Color(14, 25, 34, 255);
+        DrawRectangleRounded(bounds, .06f, 12, tile);
+        var quietZone = 4;
+        var total = qr.Modules.GetLength(0) + quietZone * 2;
+        var moduleSize = Math.Min(bounds.Width, bounds.Height) / total;
+        for (var y = 0; y < qr.Modules.GetLength(0); y++)
+        for (var x = 0; x < qr.Modules.GetLength(1); x++)
+        {
+            if (!qr.Modules[y, x]) continue;
+            var left = bounds.X + (x + quietZone) * moduleSize;
+            var top = bounds.Y + (y + quietZone) * moduleSize;
+            var right = bounds.X + (x + quietZone + 1) * moduleSize;
+            var bottom = bounds.Y + (y + quietZone + 1) * moduleSize;
+            if (qr.FunctionModules[y, x])
+            {
+                DrawRectangle((int)MathF.Floor(left), (int)MathF.Floor(top),
+                    (int)MathF.Ceiling(right) - (int)MathF.Floor(left),
+                    (int)MathF.Ceiling(bottom) - (int)MathF.Floor(top), ink);
+                continue;
+            }
+
+            var inset = moduleSize * .1f;
+            DrawRectangleRounded(new Rectangle(left + inset, top + inset,
+                right - left - inset * 2, bottom - top - inset * 2), .42f, 4, ink);
+        }
     }
 
     private void DrawPicker(bool acceptUi)
