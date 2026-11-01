@@ -36,6 +36,9 @@ internal sealed partial class GameApp : IDisposable
     private readonly GameConfig config;
     private readonly List<string> onlinePlayerIds = [];
     private OnlineAim? remoteAim;
+    private bool remoteAimDisplayInitialized;
+    private double remoteAimDisplayAngle;
+    private double remoteAimDisplayStrength;
     private bool onlineStarted;
     private bool onlineSnapshotInitialized;
     private int onlineRevision;
@@ -186,7 +189,7 @@ internal sealed partial class GameApp : IDisposable
             {
                 var active = Match.ActiveIndex; Match.Advance(dt);
                 if (active != Match.ActiveIndex) { CancelAim(); turns.Reset(Camera); }
-                AdvancePresentation(dt); Audio.Update(Session);
+                AdvancePresentation(dt); AdvanceRemoteAim(dt); Audio.Update(Session);
                 AdvanceCourseTransition(dt);
                 if (onlineStarted) UpdateOnlineSnapshot();
             }
@@ -228,10 +231,16 @@ internal sealed partial class GameApp : IDisposable
                     ConfigurePlayers(start.Players.Select(p => p.Name));
                     onlinePlayerIds.Clear(); onlinePlayerIds.AddRange(start.Players.Select(p => p.Id));
                     onlineStarted = true; onlineRevision = 0; onlineSnapshotInitialized = false;
-                    remoteAim = null; turns.Reset(Camera); AdvancePresentation(0);
+                    remoteAim = null; remoteAimDisplayInitialized = false; turns.Reset(Camera); AdvancePresentation(0);
                     UpdateOnlineSnapshot(force: true);
                     break;
                 case OnlineAim aim when onlineStarted && Match.ActiveIndex < onlinePlayerIds.Count && onlinePlayerIds[Match.ActiveIndex] == aim.PlayerId:
+                    if (!remoteAimDisplayInitialized || remoteAim?.PlayerId != aim.PlayerId)
+                    {
+                        remoteAimDisplayAngle = aim.AngleDegrees;
+                        remoteAimDisplayStrength = aim.StrengthPercent;
+                        remoteAimDisplayInitialized = true;
+                    }
                     remoteAim = aim;
                     break;
                 case OnlineShot shot:
@@ -255,7 +264,7 @@ internal sealed partial class GameApp : IDisposable
             var drag = Camera.DragForAim(shot.AngleDegrees, shot.StrengthPercent, Session.Ball.Position);
             var impulse = Camera.Impulse(drag, Session.Ball.Position, ShotMode.Mode1);
             if (impulse.X == 0 && impulse.Y == 0) throw new InvalidOperationException("The shot input produced no impulse.");
-            Session.Shoot(impulse); Audio.Update(Session); remoteAim = null;
+            Session.Shoot(impulse); Audio.Update(Session); remoteAim = null; remoteAimDisplayInitialized = false;
             var result = Session.Shot!;
             onlineHost.ConfirmShot(shot.PlayerId, shot.ShotId, shot.AngleDegrees, shot.StrengthPercent,
                 result.Steps, result.Reason.ToString(), result.FinalState.Position.X, result.FinalState.Position.Y,
@@ -300,6 +309,15 @@ internal sealed partial class GameApp : IDisposable
     {
         if (!Match.WaitingToPass) turns.Update(Session, Camera, elapsed);
         if (!aiming) Camera.AdvanceZoom(elapsed);
+    }
+
+    private void AdvanceRemoteAim(double elapsed)
+    {
+        if (remoteAim is not { } target || !remoteAimDisplayInitialized || elapsed <= 0) return;
+        var amount = 1 - Math.Exp(-config.RemoteAimSmoothingPerSecond * elapsed);
+        var angleDelta = (target.AngleDegrees - remoteAimDisplayAngle + 540) % 360 - 180;
+        remoteAimDisplayAngle = (remoteAimDisplayAngle + angleDelta * amount + 360) % 360;
+        remoteAimDisplayStrength += (target.StrengthPercent - remoteAimDisplayStrength) * amount;
     }
 
     private void Text(string text, float x, float y, float size, Color color) => DrawTextEx(font, text, new Vector2(x, y), size, .3f, color);
@@ -349,10 +367,10 @@ internal sealed partial class GameApp : IDisposable
             remote.PlayerId == onlinePlayerIds[Match.ActiveIndex])
         {
             var ball = Camera.ProjectBallCenter(Session.VisualPosition) + new Vector2(viewport.X, viewport.Y);
-            var pull = Camera.DragForAim(remote.AngleDegrees, remote.StrengthPercent, Session.Ball.Position);
+            var pull = Camera.DragForAim(remoteAimDisplayAngle, remoteAimDisplayStrength, Session.Ball.Position);
             var color = Match.Active.Color;
             DrawLineEx(ball, ball + pull, 2.5f, color); DrawCircleV(ball + pull, 5, color);
-            Text($"MIRA {remote.AngleDegrees:000}°  ·  FORÇA {remote.StrengthPercent:00}%", 28,
+            Text($"MIRA {(int)Math.Round(remoteAimDisplayAngle) % 360:000}°  ·  FORÇA {(int)Math.Round(remoteAimDisplayStrength):00}%", 28,
                 GetScreenHeight() - 101, 20, color);
         }
 

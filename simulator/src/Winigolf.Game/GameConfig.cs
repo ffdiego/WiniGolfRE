@@ -8,6 +8,7 @@ public sealed record GameConfig
     public double CourseAdvanceDelaySeconds { get; init; } = 2;
     public double CaptureDelaySeconds { get; init; } = 2;
     public double UnderParCaptureDelaySeconds { get; init; } = 3;
+    public double RemoteAimSmoothingPerSecond { get; init; } = 18;
 
     public double DelayAfterCapture(int strokes, int par) =>
         strokes < par ? UnderParCaptureDelaySeconds : CaptureDelaySeconds;
@@ -19,6 +20,8 @@ public sealed record GameConfig
         ValidateDelay(CourseAdvanceDelaySeconds, nameof(CourseAdvanceDelaySeconds));
         ValidateDelay(CaptureDelaySeconds, nameof(CaptureDelaySeconds));
         ValidateDelay(UnderParCaptureDelaySeconds, nameof(UnderParCaptureDelaySeconds));
+        if (!double.IsFinite(RemoteAimSmoothingPerSecond) || RemoteAimSmoothingPerSecond <= 0)
+            throw new ArgumentOutOfRangeException(nameof(RemoteAimSmoothingPerSecond), "Smoothing rate must be finite and positive.");
     }
 
     private static void ValidateDelay(double value, string name)

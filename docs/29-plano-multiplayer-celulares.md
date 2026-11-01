@@ -58,7 +58,7 @@ Cada comando confirmado é idempotente: repetir o mesmo `shotId` devolve a decis
 1. **Protocolo e conversão canônica — implementado:** mensagens validadas, entrada independente de pixels e ângulo relativo à câmera.
 2. **Sala local — implementada:** WebSocket no processo da TV, página móvel mínima, cadastro e início de partida. O endereço aparece na tela; ainda não há QR code. Uma fila thread-safe leva comandos até o loop Raylib.
 3. **Vertical slice — implementado, validação pendente:** suporta até seis navegadores, mostra nomes/cores, prévia da corda na TV, confirmação, simulação e estado do placar/turno. Falta experimentar com dois dispositivos na rede real.
-4. **Robustez da sessão:** reconexão, jogador desconectado, controle de sala e seleção de pista. Depois avaliar hospedagem pública, NAT, contas ou matchmaking.
+4. **Robustez futura:** tratamento/aviso para jogador que não retorne, controle de sala e seleção de pista. Depois avaliar hospedagem pública, NAT, contas ou matchmaking.
 
 O protótipo usa `System.Net.WebSockets`/ASP.NET Core sem framework de jogo/rede dedicado. As chamadas Raylib continuam na thread que criou a janela. O host web e o cliente visual estão no mesmo processo WinExe.
 
@@ -66,7 +66,7 @@ O protótipo usa `System.Net.WebSockets`/ASP.NET Core sem framework de jogo/rede
 
 - Validar em jogo que 0°/90°/180°/270° acompanham os quatro lados da câmera, inclusive depois de uma virada; a conversão está implementada, mas não foi testada em dispositivos.
 - Conferir visualmente a intensidade de 1% e 100% pela página móvel com a curva de mira atual.
-- Definir troca/abandono de jogador, seleção de pista e reconexão. O início atual pode ser acionado por qualquer participante já conectado.
+- Definir o que acontece se um jogador não retornar, além de seleção de pista e controle de sala. A reconexão pelo mesmo navegador já restaura o assento.
 - Testar navegadores móveis reais, descoberta de endereço/QR e regras de firewall do Windows na LAN.
 - A física usa `double` e funções matemáticas de runtime; a igualdade bit a bit entre arquiteturas não está garantida. Isso não bloqueia o primeiro protótipo porque o host calcula o resultado oficial. Se houver previsão local no telefone, ela é apenas visual e o estado final do servidor prevalece.
 
@@ -76,4 +76,6 @@ Inicie com `dotnet run --project simulator/src/Winigolf.Game` e abra o endereço
 
 O servidor e a janela Raylib ficam no mesmo processo, mas a implementação mantém o recebimento de rede separado numa fila consumida pelo loop principal. A autoridade continua sendo `LocalMatch`/`GameSession` no host. A força enviada é inteira de 1% a 100%, convertida em unidades de puxada pela regra de 2,5 unidades por percentual; o ângulo relativo gira com `Camera.Yaw`, com 0° no oeste e crescimento anti-horário. O host converte isso de volta para a mira equivalente e usa o simulador existente.
 
-Ainda não foi testada uma partida real com dois dispositivos. Não há QR code, reconexão, gestão de abandono, autenticação ou hospedagem pública; se o jogador ativo desconectar, a partida atual não avança automaticamente. As versões de cliente e servidor devem corresponder. Não houve alteração no executável original nem no banco Ghidra.
+O navegador salva o nome e um token aleatório de retomada no `localStorage`, separados por endereço/porta do host. Ao recarregar ou reabrir a página na mesma sala, ele entra automaticamente com o mesmo jogador e recebe o estado atual; a retomada substitui a conexão antiga desse assento. O token só vale durante a vida da sala em memória. Se o servidor reiniciar, o ID da sala muda e o navegador pede uma nova entrada com o nome já preenchido. Se o jogador ativo desconectar, a partida espera sua reconexão e não avança sozinha. As prévias de mira recebidas pelo host são suavizadas na apresentação da TV (`GameConfig.RemoteAimSmoothingPerSecond`); os valores quantizados enviados ao confirmar a tacada não são alterados.
+
+Ainda não foi testada a reconexão em vários dispositivos reais. Não há QR code, gestão de abandono, autenticação ou hospedagem pública. As versões de cliente e servidor devem corresponder. Não houve alteração no executável original nem no banco Ghidra.

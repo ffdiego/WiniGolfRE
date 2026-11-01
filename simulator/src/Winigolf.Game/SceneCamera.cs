@@ -138,8 +138,15 @@ internal sealed class SceneCamera
     // world pull that a local left-button drag would produce (2.5 units per percent).
     public Vector2 DragForAim(int angleDegrees, int strengthPercent, P3 ball)
     {
-        if (angleDegrees is < 0 or > 359) throw new ArgumentOutOfRangeException(nameof(angleDegrees));
-        if (strengthPercent is < 1 or > 100) throw new ArgumentOutOfRangeException(nameof(strengthPercent));
+        return DragForAim((double)angleDegrees, strengthPercent, ball);
+    }
+
+    public Vector2 DragForAim(double angleDegrees, double strengthPercent, P3 ball)
+    {
+        if (!double.IsFinite(angleDegrees) || angleDegrees is < 0 or >= 360)
+            throw new ArgumentOutOfRangeException(nameof(angleDegrees));
+        if (!double.IsFinite(strengthPercent) || strengthPercent is < 1 or > 100)
+            throw new ArgumentOutOfRangeException(nameof(strengthPercent));
         var length = strengthPercent * 2.5;
         var radians = Yaw + Math.PI + angleDegrees * Math.PI / 180;
         var pullX = (float)(Math.Cos(radians) * length);

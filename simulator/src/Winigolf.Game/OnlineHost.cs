@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Net.WebSockets;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Channels;
@@ -33,8 +34,10 @@ internal sealed class OnlineHost : IDisposable
     private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
     private readonly object gate = new();
     private readonly List<Peer> peers = [];
+    private readonly List<PlayerRecord> roster = [];
     private readonly ConcurrentQueue<OnlineCommand> commands = new();
     private readonly GameConfig config;
+    private readonly string roomId = Guid.NewGuid().ToString("N");
     private WebApplication? application;
     private OnlineMatchSnapshot? snapshot;
     private string? firstPlayerId;
@@ -54,8 +57,8 @@ internal sealed class OnlineHost : IDisposable
 
     public string JoinUrl { get; private set; } = "http://127.0.0.1:5188/";
     public bool Started { get { lock (gate) return started; } }
-    public int ConnectedCount { get { lock (gate) return peers.Count(p => p.Player is not null && p.Socket.State == WebSocketState.Open); } }
-    public string[] LobbyNames { get { lock (gate) return peers.Where(p => p.Player is not null).Select(p => p.Player!.Name).ToArray(); } }
+    public int ConnectedCount { get { lock (gate) return roster.Count(p => p.Connection?.Socket.State == WebSocketState.Open); } }
+    public string[] LobbyNames { get { lock (gate) return roster.Select(p => p.Connection is null ? $"{p.Player.Name} (desconectado)" : p.Player.Name).ToArray(); } }
 
     public void Start()
     {
@@ -125,7 +128,7 @@ internal sealed class OnlineHost : IDisposable
         if (!context.WebSockets.IsWebSocketRequest) { context.Response.StatusCode = StatusCodes.Status400BadRequest; return; }
         using var socket = await context.WebSockets.AcceptWebSocketAsync();
         var peer = new Peer(socket);
-        lock (gate) peers.Add(peer);
+        lock (gate) { peers.Add(peer); peer.Enqueue(new { type = "hello", roomId }); }
         var sender = SendLoopAsync(peer, context.RequestAborted);
         try { await ReceiveLoopAsync(peer, context.RequestAborted); }
         catch (OperationCanceledException) { }
@@ -136,7 +139,14 @@ internal sealed class OnlineHost : IDisposable
             {
                 peers.Remove(peer);
                 peer.Outgoing.Writer.TryComplete();
-                if (!started && peer.Player is not null) BroadcastLobbyLocked();
+                if (peer.Player is not null)
+                {
+                    var player = roster.FirstOrDefault(p => p.Player.Id == peer.Player.Id);
+                    var wasCurrentConnection = player?.Connection == peer;
+                    if (wasCurrentConnection) player!.Connection = null;
+                    if (wasCurrentConnection && !started) BroadcastLobbyLocked();
+                    else if (wasCurrentConnection) BroadcastLocked(new { type = "playerDisconnected", playerId = peer.Player.Id });
+                }
             }
             try { if (socket.State is WebSocketState.Open or WebSocketState.CloseReceived) await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", CancellationToken.None); }
             catch (WebSocketException) { }
@@ -171,7 +181,7 @@ internal sealed class OnlineHost : IDisposable
         {
             switch (type)
             {
-                case "join": JoinLocked(peer, ReadString(json, "name", 18)); break;
+                case "join": JoinLocked(peer, ReadString(json, "name", 18), ReadString(json, "resumeToken", 64)); break;
                 case "start": StartLocked(peer); break;
                 case "aim": AimLocked(peer, json); break;
                 case "shot": ShotLocked(peer, json); break;
@@ -179,19 +189,43 @@ internal sealed class OnlineHost : IDisposable
         }
     }
 
-    private void JoinLocked(Peer peer, string name)
+    private void JoinLocked(Peer peer, string name, string resumeToken)
     {
         name = name.Trim();
         if (peer.Player is not null) { peer.Enqueue(new { type = "error", message = "Already joined." }); return; }
-        if (started) { peer.Enqueue(new { type = "error", message = "This match has already started." }); return; }
-        if (name.Length is < 1 or > 18) { peer.Enqueue(new { type = "error", message = "Name must contain 1 to 18 characters." }); return; }
-        var seat = peers.Count(p => p.Player is not null);
-        if (seat >= Palette.Length) { peer.Enqueue(new { type = "error", message = "The room is full (6 players)." }); return; }
-        var player = new OnlineParticipant(Guid.NewGuid().ToString("N")[..10], name, seat, Palette[seat]);
-        peer.Player = player;
-        if (firstPlayerId is null) { firstPlayerId = player.Id; firstPlayerName = player.Name; }
-        peer.Enqueue(new { type = "joined", playerId = player.Id, player.Name, player.Color, seat, isHost = player.Id == firstPlayerId });
-        BroadcastLobbyLocked();
+        var playerRecord = resumeToken.Length == 64 ? roster.FirstOrDefault(p => p.ResumeToken == resumeToken) : null;
+        var resumed = playerRecord is not null;
+        if (playerRecord is null)
+        {
+            if (started) { peer.Enqueue(new { type = "error", message = "This match is in progress and this browser has no saved player session." }); return; }
+            if (name.Length is < 1 or > 18) { peer.Enqueue(new { type = "error", message = "Name must contain 1 to 18 characters." }); return; }
+            if (roster.Count >= Palette.Length) { peer.Enqueue(new { type = "error", message = "The room is full (6 players)." }); return; }
+            var seat = roster.Count;
+            var player = new OnlineParticipant(Guid.NewGuid().ToString("N")[..10], name, seat, Palette[seat]);
+            var token = Convert.ToHexString(RandomNumberGenerator.GetBytes(32)).ToLowerInvariant();
+            playerRecord = new PlayerRecord(player, token);
+            roster.Add(playerRecord);
+            if (firstPlayerId is null) { firstPlayerId = player.Id; firstPlayerName = player.Name; }
+        }
+
+        if (playerRecord.Connection is { } previous && previous != peer)
+        {
+            peers.Remove(previous);
+            previous.Outgoing.Writer.TryComplete();
+            previous.Socket.Abort();
+        }
+        playerRecord.Connection = peer;
+        peer.Player = playerRecord.Player;
+        var current = playerRecord.Player;
+        peer.Enqueue(new { type = "joined", playerId = current.Id, current.Name, current.Color,
+            seat = current.Seat, isHost = current.Id == firstPlayerId, resumeToken = playerRecord.ResumeToken,
+            roomId, resumed });
+        if (started)
+        {
+            if (snapshot is not null) peer.Enqueue(new { type = "state", state = snapshot });
+            BroadcastLocked(new { type = "playerReconnected", playerId = current.Id });
+        }
+        else BroadcastLobbyLocked();
     }
 
     private void StartLocked(Peer peer)
@@ -200,8 +234,10 @@ internal sealed class OnlineHost : IDisposable
         if (peer.Player.Id != firstPlayerId)
         { peer.Enqueue(new { type = "error", message = "Only the first player to join can start the match." }); return; }
         if (started) { peer.Enqueue(new { type = "error", message = "The match is already starting." }); return; }
-        var players = peers.Where(p => p.Player is not null).Select(p => p.Player!).ToArray();
+        var players = roster.Select(p => p.Player).ToArray();
         if (players.Length == 0) return;
+        if (roster.Any(p => p.Connection?.Socket.State != WebSocketState.Open))
+        { peer.Enqueue(new { type = "error", message = "All joined players must be connected before starting." }); return; }
         started = true;
         commands.Enqueue(new OnlineStart(players));
         BroadcastLocked(new { type = "starting", players });
@@ -235,8 +271,9 @@ internal sealed class OnlineHost : IDisposable
 
     private void BroadcastLobbyLocked()
     {
-        var players = peers.Where(p => p.Player is not null).Select(p => p.Player!).ToArray();
-        var hostConnected = firstPlayerId is not null && peers.Any(p => p.Player?.Id == firstPlayerId && p.Socket.State == WebSocketState.Open);
+        var players = roster.Select(p => new { p.Player.Id, p.Player.Name, p.Player.Seat, p.Player.Color,
+            connected = p.Connection?.Socket.State == WebSocketState.Open }).ToArray();
+        var hostConnected = firstPlayerId is not null && roster.Any(p => p.Player.Id == firstPlayerId && p.Connection?.Socket.State == WebSocketState.Open);
         BroadcastLocked(new { type = "lobby", players, started, hostPlayerId = firstPlayerId, hostPlayerName = firstPlayerName, hostConnected });
     }
 
@@ -294,5 +331,12 @@ internal sealed class OnlineHost : IDisposable
         public long LastAimAt { get; set; }
         public Channel<string> Outgoing { get; } = Channel.CreateUnbounded<string>(new UnboundedChannelOptions { SingleReader = true, SingleWriter = false });
         public void Enqueue(object message) => Outgoing.Writer.TryWrite(JsonSerializer.Serialize(message, JsonOptions));
+    }
+
+    private sealed class PlayerRecord(OnlineParticipant player, string resumeToken)
+    {
+        public OnlineParticipant Player { get; } = player;
+        public string ResumeToken { get; } = resumeToken;
+        public Peer? Connection { get; set; }
     }
 }
