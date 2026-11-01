@@ -6,7 +6,7 @@ using Vector3 = System.Numerics.Vector3;
 
 namespace Winigolf.Game;
 
-internal sealed class SceneCamera
+internal class SceneCamera
 {
     public CameraOptions Options { get; init; } = new();
     public Vector3? Focus { get; set; }
@@ -19,7 +19,7 @@ internal sealed class SceneCamera
     public float Zoom { get => zoom; set { zoom = value; ZoomTarget = value; } }
     public float ZoomTarget { get; private set; } = 1;
     public void RequestZoom(float wheel) => ZoomTarget = Math.Clamp(ZoomTarget * MathF.Pow(1.15f, wheel), .5f, 3f);
-    public void AdvanceZoom(double elapsed)
+    public virtual void AdvanceZoom(double elapsed)
     {
         if (!double.IsFinite(elapsed) || elapsed < 0) throw new ArgumentOutOfRangeException(nameof(elapsed));
         zoom += (ZoomTarget - zoom) * (float)(1 - Math.Exp(-12 * elapsed));
@@ -66,7 +66,7 @@ internal sealed class SceneCamera
     public void CancelTurn() => IsTurning = false;
     public static Vector3 World(P3 p) => new((float)p.X, (float)p.Z, -(float)p.Y);
 
-    public void Fit(Course course, int width, int height)
+    public virtual void Fit(Course course, int width, int height)
     {
         Width = width; Height = height;
         var points = course.Vertices.Values.Select(World).ToArray();
@@ -94,15 +94,12 @@ internal sealed class SceneCamera
     public Vector2 Project(P3 p) => Raylib.GetWorldToScreenEx(World(p), Value, Width, Height);
     public Vector2 ProjectBallCenter(P3 position) => Project(position with { Z = position.Z + CaptureMotion.BallRadius });
 
-    public void FollowBall(P3 position, double elapsed)
+    public virtual void FollowBall(P3 position, double elapsed)
     {
         if (!Options.KeepBallInFrame || Width <= 0 || Height <= 0 || elapsed <= 0) return;
         var point = Raylib.GetWorldToScreenEx(World(position) + Vector3.UnitY * 4, Value, Width, Height);
-        var margin = Math.Clamp(Options.EdgeMargin, 0, .45f);
-        var rightLimit = Math.Min(Width * (1 - margin), Width - RightOverlayWidth - 24);
-        var topLimit = Math.Max(Height * margin, TopOverlayHeight + 16);
-        var bottomLimit = Math.Min(Height * (1 - margin), Height - BottomOverlayHeight - 16);
-        var nearest = Vector2.Clamp(point, new(Width * margin, topLimit), new(rightLimit, bottomLimit));
+        var safe = SafeArea;
+        var nearest = Vector2.Clamp(point, new(safe.X, safe.Y), new(safe.X + safe.Width, safe.Y + safe.Height));
         var excess = point - nearest;
         if (excess.LengthSquared() < .0001f) return;
         var movement = excess * (float)(1 - Math.Exp(-Options.FollowSpeed * elapsed));
@@ -111,10 +108,30 @@ internal sealed class SceneCamera
         movement += remaining - Vector2.Clamp(remaining,
             new(Width * .03f, Math.Max(Height * .03f, TopOverlayHeight)),
             new(Math.Min(Width * .97f, Width - RightOverlayWidth - 8), Math.Min(Height * .97f, Height - BottomOverlayHeight)));
+        PanFocus(movement);
+    }
+
+    public virtual void TrackFrame(P3 ball, P3 hole, double elapsed) => FollowBall(ball, elapsed);
+
+    protected Rectangle SafeArea
+    {
+        get
+        {
+            var margin = Math.Clamp(Options.EdgeMargin, 0, .45f);
+            var right = Math.Min(Width * (1 - margin), Width - RightOverlayWidth - 24);
+            var top = Math.Max(Height * margin, TopOverlayHeight + 16);
+            var bottom = Math.Min(Height * (1 - margin), Height - BottomOverlayHeight - 16);
+            return new Rectangle(Width * margin, top, Math.Max(1, right - Width * margin), Math.Max(1, bottom - top));
+        }
+    }
+
+    protected void PanFocus(Vector2 screenDelta)
+    {
+        if (Width <= 0 || Height <= 0 || Value.FovY <= 0) return;
         var forward = Vector3.Normalize(Value.Target - Value.Position);
         var right = Vector3.Normalize(Vector3.Cross(forward, Value.Up));
         var up = Vector3.Normalize(Vector3.Cross(right, forward));
-        var correction = (right * movement.X - up * movement.Y) * (Value.FovY / Height);
+        var correction = (right * screenDelta.X - up * screenDelta.Y) * (Value.FovY / Height);
         Focus = (Focus ?? Value.Target) + correction;
     }
 
