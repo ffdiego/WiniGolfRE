@@ -6,6 +6,15 @@ Também há um **laboratório visual para Windows**: executar `dotnet run --proj
 
 O **cliente jogável C# + raylib** pode ser aberto com `dotnet run --project simulator/src/Winigolf.Game`. Inclui os 36 campos, projeção ortográfica inclinada/planta, mira por dois botões, interpolação e progressão. A câmera vira aleatoriamente entre tacadas; não há mais perspectiva nem atalho P. [Transição e testes atuais](../docs/21-camera-ortografica-e-virada.md). Ele inicia com o perfil corrigido `surface-traversal-2`. [Arquitetura inicial](../docs/18-primeiro-cliente-raylib.md). O projeto restaura Raylib-cs do NuGet.org; as licenças estão em [licenses/](licenses/).
 
+Para publicar o jogo como pasta framework-dependent, use um dos perfis em `src/Winigolf.Game/Properties/PublishProfiles`:
+
+```bash
+dotnet publish simulator/src/Winigolf.Game/Winigolf.Game.csproj -p:PublishProfile=win-x64
+dotnet publish simulator/src/Winigolf.Game/Winigolf.Game.csproj -p:PublishProfile=linux-x64
+```
+
+As saídas vão para `artifacts/publish/win-x64` e `artifacts/publish/linux-x64`. As duas exigem o runtime .NET 10 e o ASP.NET Core 10 no computador de destino; a versão Linux inclui o asset nativo do raylib para Linux x64. A publicação Linux também pode ser feita no Windows, desde que o restore consiga baixar os pacotes específicos de `linux-x64` do NuGet.
+
 Para abrir uma sala controlada por celulares na mesma rede, execute `dotnet run --project simulator/src/Winigolf.Game`. A janela mostra o endereço da sala; os jogadores abrem esse endereço no navegador, entram com seus nomes e o primeiro a entrar pode começar a partida. O navegador salva nome e token de retomada; recarregar a página na mesma sala reconecta automaticamente ao mesmo jogador. O modo online, a porta e os tempos são definidos na instância `GameConfig` criada em `Program.cs`. Para iniciar o jogo local de mouse/teclado, defina `OnlineMode = false`; a porta padrão é 9000. Após cada captura, há uma espera de 2 segundos; se a pontuação ficar abaixo do par, são 3 segundos para acompanhar o aplauso. `CourseAdvanceDelaySeconds` define a espera após conclusão por limite de tacadas sem captura. O host e a física rodam na máquina da tela grande; tacadas continuam sendo calculadas pelo núcleo C# do host. Ainda não há QR code nem gestão de abandono. O firewall do Windows pode solicitar permissão para conexões na rede privada.
 
 O cliente já usa os seis efeitos sonoros originais extraídos do PE. M alterna o som; o painel ajusta o esquerdo em 1×/2×/3×. O padrão atual é **1× da curva corrigida** (`drag-x87-corrected-2`): multiplicação por sqrt(L) e 0,1, resposta L^1,5. A curva anterior e o reforço temporário de 2× foram substituídos após auditoria independente dos bytes. [Correção e verificação](../docs/20-correcao-da-curva-de-tacada.md); [sons](../docs/19-sons-originais-e-ajuste-da-mira.md).
