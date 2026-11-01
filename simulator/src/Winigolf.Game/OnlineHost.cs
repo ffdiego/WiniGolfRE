@@ -37,6 +37,8 @@ internal sealed class OnlineHost : IDisposable
     private readonly GameConfig config;
     private WebApplication? application;
     private OnlineMatchSnapshot? snapshot;
+    private string? firstPlayerId;
+    private string? firstPlayerName;
     private bool started;
     private bool shotPending;
     private bool disposed;
@@ -187,13 +189,16 @@ internal sealed class OnlineHost : IDisposable
         if (seat >= Palette.Length) { peer.Enqueue(new { type = "error", message = "The room is full (6 players)." }); return; }
         var player = new OnlineParticipant(Guid.NewGuid().ToString("N")[..10], name, seat, Palette[seat]);
         peer.Player = player;
-        peer.Enqueue(new { type = "joined", playerId = player.Id, player.Name, player.Color, seat });
+        if (firstPlayerId is null) { firstPlayerId = player.Id; firstPlayerName = player.Name; }
+        peer.Enqueue(new { type = "joined", playerId = player.Id, player.Name, player.Color, seat, isHost = player.Id == firstPlayerId });
         BroadcastLobbyLocked();
     }
 
     private void StartLocked(Peer peer)
     {
         if (peer.Player is null) { peer.Enqueue(new { type = "error", message = "Join the room first." }); return; }
+        if (peer.Player.Id != firstPlayerId)
+        { peer.Enqueue(new { type = "error", message = "Only the first player to join can start the match." }); return; }
         if (started) { peer.Enqueue(new { type = "error", message = "The match is already starting." }); return; }
         var players = peers.Where(p => p.Player is not null).Select(p => p.Player!).ToArray();
         if (players.Length == 0) return;
@@ -231,7 +236,8 @@ internal sealed class OnlineHost : IDisposable
     private void BroadcastLobbyLocked()
     {
         var players = peers.Where(p => p.Player is not null).Select(p => p.Player!).ToArray();
-        BroadcastLocked(new { type = "lobby", players, started });
+        var hostConnected = firstPlayerId is not null && peers.Any(p => p.Player?.Id == firstPlayerId && p.Socket.State == WebSocketState.Open);
+        BroadcastLocked(new { type = "lobby", players, started, hostPlayerId = firstPlayerId, hostPlayerName = firstPlayerName, hostConnected });
     }
 
     private void BroadcastLocked(object message)

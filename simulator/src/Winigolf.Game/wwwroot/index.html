@@ -41,6 +41,7 @@
   <section class="card" id="lobby">
     <strong>Aguardando partida</strong>
     <div id="players" style="margin:12px 0"></div>
+    <div id="lobbyNote" class="muted"></div>
     <button id="start">Começar partida</button>
   </section>
   <section class="card" id="playing">
@@ -58,15 +59,15 @@
 (() => {
   const $ = id => document.getElementById(id);
   const ws = new WebSocket(`${location.protocol === 'https:' ? 'wss:' : 'ws:'}//${location.host}/ws`);
-  let me = null, state = null, lobbyPlayers = [], aiming = false, angle = 0, strength = 1, lastPreview = 0;
+  let me = null, state = null, lobbyPlayers = [], isRoomHost = false, hostOnline = true, hostName = '', hostPlayerId = null, aiming = false, angle = 0, strength = 1, lastPreview = 0;
   const canvas = $('pad'), ctx = canvas.getContext('2d');
   ws.onopen = () => { $('status').textContent = 'Conectado à sala'; $('join').disabled = false; $('room').textContent = location.host; };
   ws.onclose = () => { $('status').textContent = 'Conexão encerrada. Atualize a página para tentar novamente.'; $('join').disabled = true; };
   ws.onerror = () => { $('status').textContent = 'Não foi possível conectar à sala.'; };
   ws.onmessage = event => {
     const m = JSON.parse(event.data);
-    if (m.type === 'joined') { me = m.playerId; $('connect').style.display = 'none'; $('lobby').style.display = 'block'; }
-    if (m.type === 'lobby') { lobbyPlayers = m.players || []; drawLobby(); }
+    if (m.type === 'joined') { me = m.playerId; isRoomHost = !!m.isHost; $('connect').style.display = 'none'; $('lobby').style.display = 'block'; }
+    if (m.type === 'lobby') { lobbyPlayers = m.players || []; hostOnline = !!m.hostConnected; hostName = m.hostPlayerName || ''; hostPlayerId = m.hostPlayerId || null; drawLobby(); }
     if (m.type === 'starting') { $('lobby').style.display = 'none'; $('playing').style.display = 'block'; }
     if (m.type === 'state') { state = m.state; $('lobby').style.display = 'none'; $('playing').style.display = 'block'; drawState(); }
     if (m.type === 'aim' && m.playerId === state?.activePlayerId) $('turn').textContent = `Mira de ${nameOf(m.playerId)} · ${m.angleDegrees}° · ${m.strengthPercent}%`;
@@ -78,7 +79,11 @@
   $('start').onclick = () => ws.send(JSON.stringify({ type: 'start' }));
   function nameOf(id) { return state?.players.find(p => p.id === id)?.name || 'jogador'; }
   function drawLobby() {
-    $('players').innerHTML = lobbyPlayers.map(p => `<div class="player"><i class="dot" style="background:${safeColor(p.color)}"></i>${escapeHtml(p.name)}</div>`).join('');
+    $('players').innerHTML = lobbyPlayers.map(p => `<div class="player"><i class="dot" style="background:${safeColor(p.color)}"></i>${escapeHtml(p.name)}${p.id === hostPlayerId ? ' · ANFITRIÃO' : ''}</div>`).join('');
+    $('start').style.display = isRoomHost ? 'block' : 'none';
+    $('start').disabled = !hostOnline;
+    $('lobbyNote').textContent = !hostOnline ? `O anfitrião ${hostName ? `(${hostName})` : ''} desconectou. Reinicie a sala.`
+      : isRoomHost ? 'Você entrou primeiro e pode começar quando todos estiverem prontos.' : `Aguardando ${hostName || 'o anfitrião'} começar a partida.`;
   }
   function safeColor(c) { return /^#[0-9a-f]{6}$/i.test(c) ? c : '#8ee5be'; }
   function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }

@@ -81,7 +81,11 @@ internal sealed partial class GameApp
     private void DrawScoreboard(float x)
     {
         Text("VEZ DE", x + 24, 105, 18, muted);
-        Text(ShortName(Match.Active.Name, 222, 26), x + 24, 134, 26, Match.Active.Color);
+        var activeColor = Match.Active.Color;
+        var activeWash = activeColor; activeWash.A = 38;
+        Box(new Rectangle(x + 14, 128, 242, 48), activeWash, .12f);
+        DrawRectangle((int)x + 14, 132, 5, 40, activeColor);
+        Text(ShortName(Match.Active.Name, 218, 34), x + 28, 132, 34, activeColor);
         Text($"{Session.Strokes:00}", x + 20, 174, 50, white);
         Text($"PAR {Session.Course.Par}", x + 134, 197, 22, mint);
         Text("PLACAR", x + 24, 242, 18, muted);

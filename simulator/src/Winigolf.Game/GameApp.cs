@@ -323,6 +323,7 @@ internal sealed partial class GameApp : IDisposable
         BeginTextureMode(canvas); ClearBackground(background); Scene.Draw(Session, Camera, Match.Players); EndTextureMode();
         BeginDrawing(); ClearBackground(background);
         DrawTexturePro(canvas.Texture, new Rectangle(0, 0, canvas.Texture.Width, -canvas.Texture.Height), viewport, Vector2.Zero, 0, Color.White);
+        DrawGhostNameLabels();
         Box(new Rectangle(16, 12, 410, 116), new Color(14, 25, 34, 220));
         Box(new Rectangle(16, GetScreenHeight() - 82, Math.Min(850, GetScreenWidth() - 32), 72), new Color(14, 25, 34, 220));
         Text("wini", 27, 18, 40, white); Text("golf", 112, 18, 40, mint);
@@ -383,6 +384,43 @@ internal sealed partial class GameApp : IDisposable
         if (onlineHost is not null) DrawOnlineOverlay();
         EndDrawing();
     }
+
+    private void DrawGhostNameLabels()
+    {
+        var placed = new List<Rectangle>();
+        var ghostPlayers = Match.Players.Where(p => !ReferenceEquals(p.Session, Session) && p.Session.Outcome != EndReason.Captured)
+            .OrderByDescending(p => System.Numerics.Vector3.DistanceSquared(
+                SceneCamera.World(p.Session.VisualPosition), Camera.Value.Position));
+        foreach (var player in ghostPlayers)
+        {
+            var point = Camera.ProjectBallCenter(player.Session.VisualPosition);
+            const float fontSize = 17;
+            var label = ShortName(player.Name, 170, fontSize);
+            var measured = MeasureTextEx(font, label, fontSize, .3f);
+            var width = measured.X + 32; const float height = 27;
+            var x = Math.Clamp(point.X - width / 2, 8, GetScreenWidth() - width - 8);
+            var baseY = point.Y - 32;
+            var color = player.Color; color.A = 225;
+            for (var attempt = 0; attempt < 5; attempt++)
+            {
+                var rect = new Rectangle(x, baseY - attempt * (height + 3), width, height);
+                if (rect.Y < 4 || rect.Y + rect.Height > GetScreenHeight() - 4 ||
+                    Overlaps(rect, new Rectangle(16, 12, 410, 116)) ||
+                    Overlaps(rect, new Rectangle(GetScreenWidth() - 294, 86, 270, 260 + Match.Players.Count * 36)) ||
+                    Overlaps(rect, new Rectangle(16, GetScreenHeight() - 82, Math.Min(850, GetScreenWidth() - 32), 72)) ||
+                    placed.Any(other => Overlaps(rect, other))) continue;
+                var plate = new Color(9, 17, 22, 175);
+                Box(rect, plate, .18f);
+                DrawCircleV(new Vector2(rect.X + 12, rect.Y + rect.Height / 2), 4, color);
+                Text(label, rect.X + 22, rect.Y + 4, fontSize, color);
+                placed.Add(rect);
+                break;
+            }
+        }
+    }
+
+    private static bool Overlaps(Rectangle a, Rectangle b) =>
+        a.X < b.X + b.Width && a.X + a.Width > b.X && a.Y < b.Y + b.Height && a.Y + a.Height > b.Y;
 
     private void DrawOnlineOverlay()
     {
