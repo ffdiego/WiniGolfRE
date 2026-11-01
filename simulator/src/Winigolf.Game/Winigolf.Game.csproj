@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
+    <ApplicationIcon>../../assets/icons/winigolf-ball.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
@@ -8,6 +9,7 @@
     <ProjectReference Include="../Winigolf.Physics/Winigolf.Physics.csproj" />
     <Content Include="../../../docs/dados/campos/*.json" Link="courses/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../../assets/audio/*.wav" Link="audio/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../assets/icons/winigolf-ball.png" Link="icon/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="wwwroot/**/*" Link="web/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../../../docs/dados/sons-embutidos.json" Link="audio/manifest.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>

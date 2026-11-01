@@ -70,6 +70,7 @@ internal sealed partial class GameApp : IDisposable
             (hidden ? ConfigFlags.HiddenWindow : 0));
         InitWindow(1280, 820, "WiniGolf · primeira versão jogável");
         if (!IsWindowReady()) throw new InvalidOperationException("Não foi possível inicializar o contexto gráfico raylib.");
+        GolfBallIcon.ApplyToWindow();
         // Coordinates retain the original game's units; some fields exceed the default far plane.
         Rlgl.SetClipPlanes(1, 20000);
         SetWindowMinSize(1024, 720); SetExitKey(KeyboardKey.Null); SetTargetFPS(hidden ? 0 : 120);
