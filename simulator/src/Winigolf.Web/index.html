@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>WiniGolf Web</title>
+<style>
+html,body { margin:0; width:100%; height:100%; background:#0e1922; color:white; font:16px system-ui; overflow:hidden }
+body { box-sizing:border-box; height:100dvh; display:flex; flex-direction:column; align-items:stretch;
+       padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left) }
+header { flex:none; padding:.4rem; text-align:center } button { margin-left:1rem; font:inherit }
+main { flex:1; min-height:0; min-width:0; width:100%; display:flex; align-items:center; justify-content:center; overflow:hidden }
+canvas { display:block; flex:none; touch-action:none; background:#000 }
+#error { color:#ff9999; white-space:pre-wrap }
+#performance { color:#b7c9cf; font-size:.8rem; font-variant-numeric:tabular-nums }
+</style></head><body>
+<header>Arraste para mirar e solte para bater. <button id="reset">Reiniciar</button><div id="performance">Medindo desempenho…</div><div id="error" role="alert"></div></header>
+<main><canvas id="canvas" width="960" height="600" tabindex="0"></canvas></main>
+<script type="module" src="main.js"></script></body></html>

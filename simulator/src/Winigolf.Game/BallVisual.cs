@@ -39,6 +39,11 @@ internal sealed class BallVisual
         previous = p;
         if (!captured)
             DrawCylinderEx(p + Vector3.UnitY * .12f, p + Vector3.UnitY * .2f, 5.5f, 5.5f, 24, new Color(30, 64, 50, 255));
+#if BROWSER
+        // The web client keeps the normal ball mesh on the GPU. Capture still uses
+        // the CPU path below, which clips individual faces against the cup mouth.
+        if (!captured) { WebBallMesh.Draw(center, rotation, tint); return; }
+#endif
         if (captured && center.Y + Radius < target.Y + .36f) return;
         const int rings = 24, slices = 48;
         Vector3 Normal(int ring, int slice)

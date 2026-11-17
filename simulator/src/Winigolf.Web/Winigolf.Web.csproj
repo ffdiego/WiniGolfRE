@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
+    <SelfContained>true</SelfContained>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <WasmMainJSPath>main.js</WasmMainJSPath>
+    <WasmBuildNative>true</WasmBuildNative>
+    <WasmAllowUndefinedSymbols>true</WasmAllowUndefinedSymbols>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <EmccFlags>$(EmccFlags) -sALLOW_MEMORY_GROWTH=1 -sINITIAL_MEMORY=64MB</EmccFlags>
+    <EmccLinkOptimizationFlag>-O0</EmccLinkOptimizationFlag>
+    <EmccCompileOptimizationFlag>-O0</EmccCompileOptimizationFlag>
+    <WasmNativeStrip>false</WasmNativeStrip>
+    <WasmEmitSymbolMap>false</WasmEmitSymbolMap>
+    <NoWarn>$(NoWarn);CA1416</NoWarn>
+    <DefineConstants>$(DefineConstants);BROWSER</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Raylib-cs" Version="8.1.0" />
+    <ProjectReference Include="../Winigolf.Physics/Winigolf.Physics.csproj" />
+    <Compile Include="../Winigolf.Game/GameSession.cs;../Winigolf.Game/CourseScene.cs;../Winigolf.Game/SceneCamera.cs;../Winigolf.Game/CameraOptions.cs;../Winigolf.Game/BallVisual.cs;../Winigolf.Game/CaptureMotion.cs;../Winigolf.Game/LocalMatch.cs;../Winigolf.Game/GameConfig.cs;../Winigolf.Game/DynamicFramingCamera.cs;../Winigolf.Game/TurnPresentation.cs" />
+    <WasmExtraFilesToDeploy Include="index.html" TargetPath="index.html" />
+    <WasmExtraFilesToDeploy Include="main.js" TargetPath="main.js" />
+    <WasmFilesToIncludeInFileSystem Include="../../../docs/dados/campos/01.json" TargetPath="courses/01.json" />
+  </ItemGroup>
+</Project>
